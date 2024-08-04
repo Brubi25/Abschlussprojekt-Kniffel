@@ -24,7 +24,7 @@ public class GrosseStrasse extends Hand {
 		return anzahlen[0] == 0 || anzahlen[5] == 0;
 	}
 
-	public int getValue(Wurf W) {
+	public int getValue(Wurf W) { 
 		return this.isValid(W) ? 40 : 0;
 	}
 }
