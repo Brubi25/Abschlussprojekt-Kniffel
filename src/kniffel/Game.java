@@ -24,7 +24,7 @@ public class Game {
 	}
 	
 	public int getWert(String hand) {
-		return spieler[curSpieler].getWert(hand, curWurd);
+		return spieler[curSpieler].getWert(hand, curWurf);
 	}
 	
 	public int nextPlayer() {
@@ -82,6 +82,7 @@ public class Game {
 	
 	public static void main(String[] s) {
 		Game g = new Game();
+		KniffelGUI kg = new KniffelGUI();
 		g.addPlayer("Vincent");
 		g.addPlayer("Bruno");
 		g.removePlayer("Vincent");
