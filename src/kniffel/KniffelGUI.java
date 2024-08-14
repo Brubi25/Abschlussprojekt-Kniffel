@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableColumn;
 
 public class KniffelGUI extends JFrame{
 	
@@ -26,7 +26,7 @@ public class KniffelGUI extends JFrame{
 	private JPanel Panel1;
 	private JTable Tabelle;
 	private DefaultTableModel Data;
-	private TableColumnModel tcm;
+	private TableColumn col;
 	private JScrollPane ScrollPane;
 	private String[] SpaltenBeschriftung = {" ", " "};
 	private Object[][] ReihenBeschriftung = {
@@ -51,7 +51,7 @@ public class KniffelGUI extends JFrame{
 			{"Endsumme", "          -------->"},
 			};
 	
-	//Würfel und Hinzufügen von Spielern
+	//Würfel und Hinzufügen/Entfernen von Spielern
 	private JPanel Panel2;
 	private JButton Hinzufuegen;
 	private JTextField Textfeld;
@@ -81,7 +81,6 @@ public class KniffelGUI extends JFrame{
 		//Panel1 -> Tabelle
 		Data = new DefaultTableModel(ReihenBeschriftung, SpaltenBeschriftung);
 		Tabelle = new JTable(Data);
-		tcm = Tabelle.getColumnModel();
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
@@ -112,15 +111,16 @@ public class KniffelGUI extends JFrame{
 	private void spielerweg() {
 		String name = Textfeld2.getText();
 		int spielerpos = spiel.removePlayer(name); //wo gelöschter spieler war
-		int pos_tabelle = 0;
 		if(spielerpos != Integer.MAX_VALUE) {
-			pos_tabelle = spielerpos + 2;
+			spielerpos = spielerpos + 2;
 		}
-		System.out.println("[gui] PosTabelle: " + pos_tabelle);
-		System.out.println("[gui] data.getColumnName: " + Data.getColumnName(pos_tabelle));
-		System.out.println("[gui] columnindex" + tcm.getColumnIndex(Data.getColumnName(pos_tabelle)));
-		
+		System.out.println("[gui] PosTabelle: " + spielerpos);
+
 		//Tabelle.setModel(Data);
+		col = Tabelle.getColumnModel().getColumn(spielerpos);
+		Tabelle.removeColumn(col);
+		Tabelle.revalidate();
+		Tabelle.setModel(Data);
 		Textfeld.setText("");
 		/*
 		for(;pos_tabelle < Data.getColumnCount()+2-1; pos_tabelle++) {
@@ -134,9 +134,13 @@ public class KniffelGUI extends JFrame{
 
 	private void spielerdazu() {
 		String name = Textfeld.getText();
-		spiel.addPlayer(name);
-		Data.addColumn(name);
-		Tabelle.setModel(Data);
-		Textfeld.setText("");
+		if(spiel.getAnzahlSpieler() < 6) {
+			spiel.addPlayer(name);
+			Data.addColumn(name);
+			Tabelle.setModel(Data);
+			Textfeld.setText("");
+		}else {
+			Textfeld.setText("Maximale Spieleranzahl erreicht");
+		}
 	}
 }

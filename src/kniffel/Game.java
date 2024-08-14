@@ -85,6 +85,10 @@ public class Game {
 		}
 	}
 	
+	public int getAnzahlSpieler() {
+		return this.anzSpieler;
+	}
+	
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUIDaten data = new KniffelGUIDaten();
