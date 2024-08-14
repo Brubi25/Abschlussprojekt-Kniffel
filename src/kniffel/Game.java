@@ -57,18 +57,23 @@ public class Game {
 		}
 	}
 	
-	public void removePlayer(String name) {
+	public int removePlayer(String name) {
 		int pos;
+		//neu
+		int pos_gefunden = Integer.MAX_VALUE;
 		for(pos = 0; pos < anzSpieler; pos++) {
-			if(spieler[pos].getName() == name) {
+			if(spieler[pos].getName().equals(name)) {
 				spieler[pos] = null;
 				anzSpieler--;
+				pos_gefunden = pos; //index übergeben wo gefunden
 				break;
 			}
 		}
 		for(; pos < anzSpieler; pos++) {
 			spieler[pos] = spieler[pos+1];
 		}
+		
+		return pos_gefunden;
 	}
 	
 	
@@ -82,12 +87,8 @@ public class Game {
 	
 	public static void main(String[] s) {
 		Game g = new Game();
-		KniffelGUI kg = new KniffelGUI();
-		g.addPlayer("Vincent");
-		g.addPlayer("Bruno");
-		g.removePlayer("Vincent");
-		g.addPlayer("Maxim");
-		g.addPlayer("Vincent");
-		g.printAll(new Wurf(new int[] {1,1,1,1,1}));
+		KniffelGUIDaten data = new KniffelGUIDaten();
+		KniffelGUI gui = new KniffelGUI(data, g);
+		gui.setVisible(true);
 	}
 }
