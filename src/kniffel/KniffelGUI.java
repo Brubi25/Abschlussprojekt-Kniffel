@@ -2,7 +2,10 @@ package kniffel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,19 +54,30 @@ public class KniffelGUI extends JFrame{
 			{"Endsumme", "          -------->"},
 			};
 	
-	//Würfel und Hinzufügen/Entfernen von Spielern
+	//vor Spielstart mit Hinzufügen/Entfernen von Spielern und Startbutton
 	private JPanel Panel2;
 	private JButton Hinzufuegen;
-	private JTextField Textfeld;
+	private JTextField HTextfeld;
 	private JButton Entfernen;
-	private JTextField Textfeld2;
+	private JTextField ETextfeld;
+	private JButton Start;
 	
-	
+	//während Spiel
+	private JPanel Panel3;
+	private GridBagLayout Gridbaglayout;
+	private GridBagConstraints Gridbagconstraints;
+	private Insets Insets;
+	private JButton Wuerfel1;
+	private JButton Wuerfel2;
+	private JButton Wuerfel3;
+	private JButton Wuerfel4;
+	private JButton Wuerfel5;
+	private JButton Wuerfeln;
 		
 	public KniffelGUI(KniffelGUIDaten model, Game spiel){
 		this.daten = model;
 		this.spiel = spiel;
-		this.setSize(700, 700);
+		this.setSize(800, 800);
 		this.setLocation(500, 500);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Kniffel");
@@ -75,6 +89,14 @@ public class KniffelGUI extends JFrame{
 		Panel2 = new JPanel();
 		Panel2.setLayout(null);
 		
+		Panel3 = new JPanel();
+		Gridbaglayout = new GridBagLayout();
+		Gridbagconstraints = new GridBagConstraints();
+		Gridbaglayout.setConstraints(Panel3, Gridbagconstraints);
+		Insets = new Insets(20,20,20, 20);
+		Gridbagconstraints.insets = Insets;
+		Panel3.setLayout(Gridbaglayout);
+		
 		this.add(Panel1);
 		this.add(Panel2);
 		
@@ -85,62 +107,110 @@ public class KniffelGUI extends JFrame{
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
 
-		//Panel2
+		//Panel2 -> vor Spielstart Interface
 		Panel2.setBackground(Color.blue);
+				
+		HTextfeld = new JTextField();
+		HTextfeld.setBounds(10, 20, 100, 20);
+		Panel2.add(HTextfeld);
+		
 		Hinzufuegen = new JButton("Spieler hinzufügen");
 		Hinzufuegen.setBounds(130, 20, 150, 20);
 		Panel2.add(Hinzufuegen);
-		Hinzufuegen.addActionListener(e -> spielerdazu());
+		Hinzufuegen.addActionListener(e -> spielerdazu());	
 		
-		Textfeld = new JTextField();
-		Textfeld.setBounds(10, 20, 100, 20);
-		Panel2.add(Textfeld);
+		ETextfeld = new JTextField();
+		ETextfeld.setBounds(320, 20, 100, 20);
+		Panel2.add(ETextfeld);
 		
 		Entfernen = new JButton("Spieler entfernen");
 		Entfernen.setBounds(430, 20, 150, 20);
 		Panel2.add(Entfernen);
 		Entfernen.addActionListener(e -> spielerweg());
 		
-		Textfeld2 = new JTextField();
-		Textfeld2.setBounds(320, 20, 100, 20);
-		Panel2.add(Textfeld2);
+		Start = new JButton("Spiel starten");
+		Start.setBounds(600, 20, 150, 20);
+		Panel2.add(Start);
+		Start.addActionListener(e -> spielstarten());
+		
+		//Panel3 -> während Spiel Interface
+		Panel3.setBackground(Color.green);
+		Wuerfel1 = new JButton(" ");
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 0;
+		
+		Panel3.add(Wuerfel1, Gridbagconstraints);
+		
+		Wuerfel2 = new JButton(" ");
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(Wuerfel2, Gridbagconstraints);
+		
+		Wuerfel3 = new JButton(" ");
+		Gridbagconstraints.gridx = 2;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(Wuerfel3, Gridbagconstraints);
+		
+		Wuerfel4 = new JButton(" ");
+		Gridbagconstraints.gridx = 3;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(Wuerfel4, Gridbagconstraints);
+		
+		Wuerfel5 = new JButton(" ");
+		Gridbagconstraints.gridx = 4;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(Wuerfel5, Gridbagconstraints);
+		
+		Wuerfeln = new JButton("Würfeln");
+		Gridbagconstraints.gridx = 5;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(Wuerfeln, Gridbagconstraints);
+		Wuerfeln.addActionListener(e -> GUI_wuerfeln());
+	
 	}
 
-
-
+	private void spielerdazu() {
+		String name = HTextfeld.getText();
+		if(spiel.getAnzahlSpieler() < 6) {
+			spiel.addPlayer(name);
+			Data.addColumn(name);
+			Tabelle.setModel(Data);
+			HTextfeld.setText("");
+		}else {
+			HTextfeld.setText("Maximale Spieleranzahl erreicht");
+		}
+	}
+	
 	private void spielerweg() {
-		String name = Textfeld2.getText();
+		String name = ETextfeld.getText();
 		int spielerpos = spiel.removePlayer(name); //wo gelöschter spieler war
 		if(spielerpos != Integer.MAX_VALUE) {
 			spielerpos = spielerpos + 2;
 		}
 		System.out.println("[gui] PosTabelle: " + spielerpos);
 
-		//Tabelle.setModel(Data);
 		col = Tabelle.getColumnModel().getColumn(spielerpos);
 		Tabelle.removeColumn(col);
 		Tabelle.revalidate();
 		Tabelle.setModel(Data);
-		Textfeld.setText("");
-		/*
-		for(;pos_tabelle < Data.getColumnCount()+2-1; pos_tabelle++) {
-			int location  = tcm.getColumnIndex(Data.getColumnName(pos_tabelle));
-			tcm.moveColumn(location, pos_tabelle);
+		ETextfeld.setText("");
+	}
+	
+	private void spielstarten() {
+		if(spiel.getAnzahlSpieler() != 0) {
+			remove(Panel2);
+			add(Panel3);
+			revalidate();
+		} else {
+			System.out.println("[gui] Es müssen mehr als Null spieler teilnehmen");
 		}
-		*/
 	}
 
-
-
-	private void spielerdazu() {
-		String name = Textfeld.getText();
-		if(spiel.getAnzahlSpieler() < 6) {
-			spiel.addPlayer(name);
-			Data.addColumn(name);
-			Tabelle.setModel(Data);
-			Textfeld.setText("");
-		}else {
-			Textfeld.setText("Maximale Spieleranzahl erreicht");
-		}
+	private void GUI_wuerfeln() {
+		
+	}
+	
+	private void GameLoop() {
+		
 	}
 }
