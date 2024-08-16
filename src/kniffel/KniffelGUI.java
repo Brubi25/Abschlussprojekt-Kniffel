@@ -9,6 +9,7 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,10 +29,9 @@ public class KniffelGUI extends JFrame{
 	//Tabelle mit Werten
 	private JPanel Panel1;
 	private JTable Tabelle;
-	private DefaultTableModel Data;
 	private TableColumn col;
 	private JScrollPane ScrollPane;
-	private String[] SpaltenBeschriftung = {" ", " "};
+	private Object[] SpaltenBeschriftung = {" ", " "};
 	private Object[][] ReihenBeschriftung = {
 			{"1er", "nur Einser zaehlen"},
 			{"2er", "nur Zweier zaehlen"},
@@ -101,8 +101,7 @@ public class KniffelGUI extends JFrame{
 		this.add(Panel2);
 		
 		//Panel1 -> Tabelle
-		Data = new DefaultTableModel(ReihenBeschriftung, SpaltenBeschriftung);
-		Tabelle = new JTable(Data);
+		Tabelle = new JTable(ReihenBeschriftung, SpaltenBeschriftung);
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
@@ -169,40 +168,56 @@ public class KniffelGUI extends JFrame{
 	
 	}
 
+	/*
+	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
+	 */
 	private void spielerdazu() {
 		String name = HTextfeld.getText();
-		if(spiel.getAnzahlSpieler() < 6) {
+		if(name.equals("")) {
+			JOptionPane.showMessageDialog(null, "Keinen Namen vergeben.");
+		}else if(spiel.getAnzahlSpieler() < 6) {
 			spiel.addPlayer(name);
-			Data.addColumn(name);
-			Tabelle.setModel(Data);
+			col = new TableColumn();
+			col.setHeaderValue(name);
+			Tabelle.addColumn(col); //added in backend und stellt dar
 			HTextfeld.setText("");
+			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
 		}else {
-			HTextfeld.setText("Maximale Spieleranzahl erreicht");
+			JOptionPane.showMessageDialog(null, "Maximale Spieleranzahl erreicht.");
 		}
 	}
 	
+	/*
+	 * Entfernt Spieler aus Tabelle + Array, sofern vorhanden in Array
+	 * 
+	 */
 	private void spielerweg() {
 		String name = ETextfeld.getText();
 		int spielerpos = spiel.removePlayer(name); //wo gelöschter spieler war
 		if(spielerpos != Integer.MAX_VALUE) {
 			spielerpos = spielerpos + 2;
+			col = Tabelle.getColumnModel().getColumn(spielerpos);
+			Tabelle.removeColumn(col); //nur frontend und nicht in backend data removed
+			ETextfeld.setText("");
+			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
+		} else {
+			JOptionPane.showMessageDialog(null, "Spieler nicht vorhanden.");
 		}
-		System.out.println("[gui] PosTabelle: " + spielerpos);
-
-		col = Tabelle.getColumnModel().getColumn(spielerpos);
-		Tabelle.removeColumn(col);
-		Tabelle.revalidate();
-		Tabelle.setModel(Data);
-		ETextfeld.setText("");
+		
+		
 	}
 	
+	/*
+	 * Entfernt Panel für Hinzufügen/Entfernen von Spielern und Starten
+	 * Fügt Spielpanel mit Würfeln etc hinzu
+	 */ 
 	private void spielstarten() {
 		if(spiel.getAnzahlSpieler() != 0) {
 			remove(Panel2);
 			add(Panel3);
 			revalidate();
 		} else {
-			System.out.println("[gui] Es müssen mehr als Null spieler teilnehmen");
+			JOptionPane.showMessageDialog(null, "Es müssen mehr als Null Spieler teilnehmen.");
 		}
 	}
 
