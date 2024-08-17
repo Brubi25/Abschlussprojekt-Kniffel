@@ -59,7 +59,6 @@ public class Game {
 	
 	public int removePlayer(String name) {
 		int pos;
-		//neu
 		int pos_gefunden = Integer.MAX_VALUE;
 		for(pos = 0; pos < anzSpieler; pos++) {
 			if(spieler[pos].getName().equals(name)) {

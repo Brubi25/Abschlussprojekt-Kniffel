@@ -107,6 +107,7 @@ public class KniffelGUI extends JFrame{
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
+		
 
 		//Panel2 -> vor Spielstart Interface
 		Panel2.setBackground(Color.blue);
@@ -179,7 +180,7 @@ public class KniffelGUI extends JFrame{
 			JOptionPane.showMessageDialog(null, "Keinen Namen vergeben.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
 			spiel.addPlayer(name); //added Player in Backend
-			col = new TableColumn(0);
+			col = new TableColumn();
 			col.setHeaderValue(name);
 			Tabelle.addColumn(col); //added in Spalte in Frontend
 			HTextfeld.setText("");
@@ -197,7 +198,7 @@ public class KniffelGUI extends JFrame{
 		String name = ETextfeld.getText();
 		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
 		if(spielerpos != Integer.MAX_VALUE) {
-			spielerpos = spielerpos + 3;
+			spielerpos += 3;
 			col = Tabelle.getColumnModel().getColumn(spielerpos);
 			Tabelle.removeColumn(col); // Spalte in Frontend removed
 			ETextfeld.setText("");
