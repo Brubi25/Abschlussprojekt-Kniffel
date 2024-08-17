@@ -197,7 +197,7 @@ public class KniffelGUI extends JFrame{
 		String name = ETextfeld.getText();
 		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
 		if(spielerpos != Integer.MAX_VALUE) {
-			spielerpos = spielerpos + 2;
+			spielerpos = spielerpos + 3;
 			col = Tabelle.getColumnModel().getColumn(spielerpos);
 			Tabelle.removeColumn(col); // Spalte in Frontend removed
 			ETextfeld.setText("");
