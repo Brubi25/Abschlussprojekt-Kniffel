@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -140,28 +141,32 @@ public class KniffelGUI extends JFrame{
 		Wuerfel1 = new JButton(" ");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
-		
 		Panel3.add(Wuerfel1, Gridbagconstraints);
+		Wuerfel1.addActionListener(e -> ToggleOnOff(0));
 		
 		Wuerfel2 = new JButton(" ");
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel2, Gridbagconstraints);
+		Wuerfel2.addActionListener(e -> ToggleOnOff(1));
 		
 		Wuerfel3 = new JButton(" ");
 		Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel3, Gridbagconstraints);
+		Wuerfel3.addActionListener(e -> ToggleOnOff(2));
 		
 		Wuerfel4 = new JButton(" ");
 		Gridbagconstraints.gridx = 3;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel4, Gridbagconstraints);
+		Wuerfel4.addActionListener(e -> ToggleOnOff(3));
 		
 		Wuerfel5 = new JButton(" ");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel5, Gridbagconstraints);
+		Wuerfel5.addActionListener(e -> ToggleOnOff(4));
 		
 		Wuerfeln = new JButton("Würfeln");
 		Gridbagconstraints.gridx = 5;
@@ -170,6 +175,8 @@ public class KniffelGUI extends JFrame{
 		Wuerfeln.addActionListener(e -> GUI_wuerfeln());
 	
 	}
+
+	
 
 	/*
 	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
@@ -206,8 +213,6 @@ public class KniffelGUI extends JFrame{
 		} else {
 			JOptionPane.showMessageDialog(null, "Spieler nicht vorhanden.");
 		}
-		
-		
 	}
 	
 	/*
@@ -225,7 +230,19 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_wuerfeln() {
+		Wurf t = spiel.wurfeln();
+		System.out.println(t);
+		System.out.println(t.sumOfAll());
+		Wuerfel1.setText(Integer.toString(t.get(0)));
+		Wuerfel2.setText(Integer.toString(t.get(1)));
+		Wuerfel3.setText(Integer.toString(t.get(2)));
+		Wuerfel4.setText(Integer.toString(t.get(3)));
+		Wuerfel5.setText(Integer.toString(t.get(4)));
 		
+	}
+
+	private void ToggleOnOff(int button) {
+		System.out.println(button);
 	}
 	
 	private void GameLoop() {
