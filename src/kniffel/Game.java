@@ -91,8 +91,7 @@ public class Game {
 	
 	public static void main(String[] s) {
 		Game g = new Game();
-		KniffelGUIDaten data = new KniffelGUIDaten();
-		KniffelGUI gui = new KniffelGUI(data, g);
+		KniffelGUI gui = new KniffelGUI(g);
 		gui.setVisible(true);
 	}
 }

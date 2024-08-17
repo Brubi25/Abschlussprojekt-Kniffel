@@ -23,7 +23,6 @@ public class KniffelGUI extends JFrame{
 		
 	}
 	
-	private KniffelGUIDaten daten;
 	private Game spiel;
 	
 	//Tabelle mit Werten
@@ -31,27 +30,27 @@ public class KniffelGUI extends JFrame{
 	private JTable Tabelle;
 	private TableColumn col;
 	private JScrollPane ScrollPane;
-	private Object[] SpaltenBeschriftung = {" ", " "};
+	private Object[] SpaltenBeschriftung = {"", " ", " "};
 	private Object[][] ReihenBeschriftung = {
-			{"1er", "nur Einser zaehlen"},
-			{"2er", "nur Zweier zaehlen"},
-			{"3er", "nur Dreier zaehlen"},
-			{"4er", "nur Vierer zaehlen"},
-			{"5er", "nur Fuenfer zaehlen"},
-			{"6er", "nur Sechser zaehlen"},
-			{"gesamt", "          -------->"},
-			{"Bonus bei 63 oder mehr", "plus 35"},
-			{"gesamt oberer Teil", "          -------->"},
-			{"Dreierpasch", "Alle Augen zaehlen"},
-			{"Viererpasch", "Alle Augen zaehlen"},
-			{"Full House", "25 Punkte"},
-			{"Kleine Straße", "30 Punkte"},
-			{"Große Straße", "40 Punkte"},
-			{"Kniffel", "50 Punkte"},
-			{"Chance", "alle Augen zaehlen"},
-			{"gesamt unterer Teil", "          -------->"},
-			{"gesamt oberer Teil", "          -------->"},
-			{"Endsumme", "          -------->"},
+			{"", "1er", "nur Einser zaehlen"},
+			{"", "2er", "nur Zweier zaehlen"},
+			{"", "3er", "nur Dreier zaehlen"},
+			{"", "4er", "nur Vierer zaehlen"},
+			{"", "5er", "nur Fuenfer zaehlen"},
+			{"", "6er", "nur Sechser zaehlen"},
+			{"", "gesamt", "          -------->"},
+			{"", "Bonus bei 63 oder mehr", "plus 35"},
+			{"", "gesamt oberer Teil", "          -------->"},
+			{"", "Dreierpasch", "Alle Augen zaehlen"},
+			{"", "Viererpasch", "Alle Augen zaehlen"},
+			{"", "Full House", "25 Punkte"},
+			{"", "Kleine Straße", "30 Punkte"},
+			{"", "Große Straße", "40 Punkte"},
+			{"", "Kniffel", "50 Punkte"},
+			{"", "Chance", "alle Augen zaehlen"},
+			{"", "gesamt unterer Teil", "          -------->"},
+			{"", "gesamt oberer Teil", "          -------->"},
+			{"", "Endsumme", "          -------->"},
 			};
 	
 	//vor Spielstart mit Hinzufügen/Entfernen von Spielern und Startbutton
@@ -74,11 +73,10 @@ public class KniffelGUI extends JFrame{
 	private JButton Wuerfel5;
 	private JButton Wuerfeln;
 		
-	public KniffelGUI(KniffelGUIDaten model, Game spiel){
-		this.daten = model;
+	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
 		this.setSize(800, 800);
-		this.setLocation(500, 500);
+		this.setLocation(500, 300);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Kniffel");
 		this.setLayout(new GridLayout(2,1));
@@ -102,6 +100,10 @@ public class KniffelGUI extends JFrame{
 		
 		//Panel1 -> Tabelle
 		Tabelle = new JTable(ReihenBeschriftung, SpaltenBeschriftung);
+		//für hinzufügen von leerer Spalte wird 0. Spalte genutzt aber nicht final hoffentlich
+		Tabelle.getColumnModel().getColumn(0).setMinWidth(0);
+		Tabelle.getColumnModel().getColumn(0).setMaxWidth(0);
+		Tabelle.getColumnModel().getColumn(0).setWidth(0);
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
@@ -176,10 +178,10 @@ public class KniffelGUI extends JFrame{
 		if(name.equals("")) {
 			JOptionPane.showMessageDialog(null, "Keinen Namen vergeben.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
-			spiel.addPlayer(name);
-			col = new TableColumn();
+			spiel.addPlayer(name); //added Player in Backend
+			col = new TableColumn(0);
 			col.setHeaderValue(name);
-			Tabelle.addColumn(col); //added in backend und stellt dar
+			Tabelle.addColumn(col); //added in Spalte in Frontend
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
 		}else {
@@ -193,11 +195,11 @@ public class KniffelGUI extends JFrame{
 	 */
 	private void spielerweg() {
 		String name = ETextfeld.getText();
-		int spielerpos = spiel.removePlayer(name); //wo gelöschter spieler war
+		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
 		if(spielerpos != Integer.MAX_VALUE) {
 			spielerpos = spielerpos + 2;
 			col = Tabelle.getColumnModel().getColumn(spielerpos);
-			Tabelle.removeColumn(col); //nur frontend und nicht in backend data removed
+			Tabelle.removeColumn(col); // Spalte in Frontend removed
 			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
 		} else {
