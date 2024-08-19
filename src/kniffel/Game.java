@@ -77,6 +77,7 @@ public class Game {
 	
 	
 	
+	//nächste FEature 1
 	//eigentlich Nutzlos
 	public void printAll(Wurf W) {
 		for(int i = 0; i < anzSpieler; i++) {
