@@ -78,7 +78,6 @@ public class Game {
 	
 	
 	//eigentlich Nutzlos
-	//testkomentar
 	public void printAll(Wurf W) {
 		for(int i = 0; i < anzSpieler; i++) {
 			spieler[i].print(W);
