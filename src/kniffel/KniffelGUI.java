@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -67,6 +68,7 @@ public class KniffelGUI extends JFrame{
 	private GridBagLayout Gridbaglayout;
 	private GridBagConstraints Gridbagconstraints;
 	private Insets Insets;
+	private boolean[] WuerfelReRoll = {true, true, true, true, true}; //true  == reroll
 	private JButton Wuerfel1;
 	private JButton Wuerfel2;
 	private JButton Wuerfel3;
@@ -142,31 +144,31 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel1, Gridbagconstraints);
-		Wuerfel1.addActionListener(e -> ToggleOnOff(0));
+		Wuerfel1.addActionListener(e -> ToggleOnOff());
 		
 		Wuerfel2 = new JButton(" ");
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel2, Gridbagconstraints);
-		Wuerfel2.addActionListener(e -> ToggleOnOff(1));
+		Wuerfel2.addActionListener(e -> ToggleOnOff());
 		
 		Wuerfel3 = new JButton(" ");
 		Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel3, Gridbagconstraints);
-		Wuerfel3.addActionListener(e -> ToggleOnOff(2));
+		Wuerfel3.addActionListener(e -> ToggleOnOff());
 		
 		Wuerfel4 = new JButton(" ");
 		Gridbagconstraints.gridx = 3;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel4, Gridbagconstraints);
-		Wuerfel4.addActionListener(e -> ToggleOnOff(3));
+		Wuerfel4.addActionListener(e -> ToggleOnOff());
 		
 		Wuerfel5 = new JButton(" ");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel5, Gridbagconstraints);
-		Wuerfel5.addActionListener(e -> ToggleOnOff(4));
+		Wuerfel5.addActionListener(e -> ToggleOnOff());
 		
 		Wuerfeln = new JButton("Würfeln");
 		Gridbagconstraints.gridx = 5;
@@ -241,8 +243,15 @@ public class KniffelGUI extends JFrame{
 		
 	}
 
-	private void ToggleOnOff(int button) {
-		System.out.println(button);
+	private void ToggleOnOff() {
+		
+		/*
+		if(WuerfelReRoll[button]) {
+			WuerfelReRoll[button] = false;
+		} else {
+			WuerfelReRoll[button] = true;
+		}
+		*/
 	}
 	
 	private void GameLoop() {

@@ -92,6 +92,12 @@ public class Game {
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
+		Wurf test = g.wurfeln(); 
+		//nur für testen
+		System.out.println(test);
+		boolean[] t = {false, true, true, true, false};
+		test.neuWuerfeln(t);
+		System.out.println(test);
 		gui.setVisible(true);
 	}
 }
