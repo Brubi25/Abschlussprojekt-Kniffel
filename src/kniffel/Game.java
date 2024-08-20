@@ -44,7 +44,8 @@ public class Game {
 			this.wurfeln();
 			return this.curWurf;
 		}
-		return this.curWurf = Wurf.wuerfeln();
+		this.curWurf.neuWuerfeln(wurfel);
+		return this.curWurf;
 	}
 	
 	public Wurf wurfeln() {
@@ -92,11 +93,12 @@ public class Game {
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
-		Wurf test = g.wurfeln(); 
+		
 		//nur für testen
+		Wurf test = g.wurfeln(); 
 		System.out.println(test);
 		boolean[] t = {false, true, true, true, false};
-		test.neuWuerfeln(t);
+		test = g.wurfeln(t);
 		System.out.println(test);
 		gui.setVisible(true);
 	}
