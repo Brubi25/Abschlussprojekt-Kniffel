@@ -11,13 +11,18 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 public class KniffelGUI extends JFrame{
 	
@@ -30,8 +35,10 @@ public class KniffelGUI extends JFrame{
 	//Tabelle mit Werten
 	private JPanel Panel1;
 	private JTable Tabelle;
+	private TableModel Data;
 	private TableColumn col;
 	private JScrollPane ScrollPane;
+	private ListSelectionModel lsm;
 	private Object[] SpaltenBeschriftung = {"", " ", " "};
 	private Object[][] ReihenBeschriftung = {
 			{"", "1er", "nur Einser zaehlen"},
@@ -78,6 +85,25 @@ public class KniffelGUI extends JFrame{
 	private Color toggleOff = new Color(110, 106, 105);
 	private Color toggleOn = new Color(222, 106, 216);		
 	private Wurf wurf;
+	private JButton debugger;
+	
+	//Debugger
+	private JPanel Panel4;
+	private JButton Einschreiben;
+	private JLabel Ls;
+	private JTextField Spieler;
+	private JLabel Lh;
+	private JTextField Hand;
+	private JLabel lW1;
+	private JTextField W1;
+	private JLabel lW2;
+	private JTextField W2;
+	private JLabel lW3;
+	private JTextField W3;
+	private JLabel lW4;
+	private JTextField W4;
+	private JLabel lW5;
+	private JTextField W5;
 
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
@@ -101,11 +127,26 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.insets = Insets;
 		Panel3.setLayout(Gridbaglayout);
 		
+		Panel4 = new JPanel();
+		Panel4.setLayout(new GridLayout(3,5));
+		
 		this.add(Panel1);
 		this.add(Panel2);
 		
 		//Panel1 -> Tabelle
-		Tabelle = new JTable(ReihenBeschriftung, SpaltenBeschriftung);
+		Data = new DefaultTableModel(ReihenBeschriftung, SpaltenBeschriftung);
+		Tabelle = new JTable(Data) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+			
+		};
+		
+		
+		Tabelle.setColumnSelectionAllowed(false);
+		Tabelle.setRowSelectionAllowed(false);
 		//für hinzufügen von leerer Spalte wird 0. Spalte genutzt aber nicht final hoffentlich
 		Tabelle.getColumnModel().getColumn(0).setMinWidth(0);
 		Tabelle.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -184,6 +225,59 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(Wuerfeln, Gridbagconstraints);
 		Wuerfeln.addActionListener(e -> GUI_wuerfeln(WuerfelReRoll));
 	
+		debugger = new JButton("Debug-Modus");
+		Gridbagconstraints.gridx = 6;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(debugger, Gridbagconstraints);
+		debugger.addActionListener(e -> debug());
+		
+		//Panel 4 -> Debug-Modus
+		Panel4.setBackground(Color.MAGENTA);
+		lW1 = new JLabel("Würfel 1");
+		Panel4.add(lW1);
+
+		lW2 = new JLabel("Würfel 2");
+		Panel4.add(lW2);
+		
+		lW3 = new JLabel("Würfel 3");
+		Panel4.add(lW3);
+
+		lW4 = new JLabel("Würfel 4");
+		Panel4.add(lW4);
+
+		lW5 = new JLabel("Würfel 5");
+		Panel4.add(lW5);
+		
+		W1 = new JTextField();
+		Panel4.add(W1);
+		
+		W2 = new JTextField();
+		Panel4.add(W2);
+		
+		W3 = new JTextField();
+		Panel4.add(W3);
+		
+		W4 = new JTextField();
+		Panel4.add(W4);
+		
+		W5 = new JTextField();
+		Panel4.add(W5);
+	
+		Ls = new JLabel("Spieler");
+		Panel4.add(Ls);
+		
+		Spieler = new JTextField();
+		Panel4.add(Spieler);
+		
+		Lh = new JLabel("Hand");
+		Panel4.add(Lh);
+		
+		Hand = new JTextField();
+		Panel4.add(Hand);
+		
+		Einschreiben = new JButton("Werte einschreiben");
+		Panel4.add(Einschreiben);
+		Einschreiben.addActionListener(e -> debug_einschreiben());
 	}
 
 	
@@ -233,6 +327,17 @@ public class KniffelGUI extends JFrame{
 		if(spiel.getAnzahlSpieler() != 0) {
 			remove(Panel2);
 			add(Panel3);
+			//vllt aber gibt nur Row, kann funktionieren aber nicht so top
+			lsm = Tabelle.getSelectionModel();
+			lsm.addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					if(!lsm.isSelectionEmpty()) {
+						int selRow = lsm.getMinSelectionIndex();
+						System.out.println(selRow);
+					}
+				}
+			});
 			revalidate();
 		} else {
 			JOptionPane.showMessageDialog(null, "Es müssen mehr als Null Spieler teilnehmen.");
@@ -262,7 +367,33 @@ public class KniffelGUI extends JFrame{
 		}
 	}
 	
-	private void GameLoop() {
+	private void debug() {
+		remove(Panel3);
+		add(Panel4);
+		revalidate();
+	}
+	
+	private void debug_einschreiben() {
+		int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
+		Wurf debug_wurf = new Wurf(debug_zahlen);
+		spiel.setCurWurf(debug_wurf);
+		spiel.setCurSpieler(Spieler.getText());
+		//spiel.printAll(debug_wurf);
+		int spieler = spiel.getCurSpieler();
+		int tabellenplatz = spieler+3;
+		System.out.println("[gui] Wurf: " + spiel.getCurWurf() + " Spieler: " + spiel.getCurSpieler() + " Tabellenplatz: " + tabellenplatz);
+		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
+		//Tabelle.setValueAt(spiel.getWert(Hand.getText()), 10, tabellenplatz);
+		/*
+		if(spiel.handSpielen(Hand.getText())){
+			System.out.println("Erfolgreich gespielt");
+		}else {
+			System.out.println("Keine Hand gespielt");
+		}
+		*/
+		repaint();
+		
 		
 	}
+	
 }

@@ -9,6 +9,8 @@ public class Game {
 	Game(){
 		spieler = new Spieler[6];
 		anzSpieler = 0;
+		//debug
+		curSpieler = 0;
 	}
 	/**
 	 * Spielt Hand
@@ -76,7 +78,20 @@ public class Game {
 		return pos_gefunden;
 	}
 	
+	//für debug zum testen
+	public int setCurSpieler(String name) {
+		for(int i = 0; i < spieler.length; i++) {
+			if(spieler[i].getName().equals(name)){
+				this.curSpieler = i;
+				return this.curSpieler;
+			}
+		}
+		return this.getCurSpieler();
+	}
 	
+	public void setCurWurf(Wurf wurf) {
+		this.curWurf = wurf;
+	}
 	
 	//nächste FEature 1
 	//eigentlich Nutzlos
