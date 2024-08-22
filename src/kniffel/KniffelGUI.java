@@ -6,9 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableColumnModel;
 
 public class KniffelGUI extends JFrame{
 	
@@ -35,31 +32,31 @@ public class KniffelGUI extends JFrame{
 	//Tabelle mit Werten
 	private JPanel Panel1;
 	private JTable Tabelle;
-	private TableModel Data;
-	private TableColumn col;
+	private DefaultTableModel Data;
+	private TableColumnModel ColumnModel;
 	private JScrollPane ScrollPane;
 	private ListSelectionModel lsm;
-	private Object[] SpaltenBeschriftung = {"", " ", " "};
+	private String[] SpaltenBeschriftung = new String[8];
 	private Object[][] ReihenBeschriftung = {
-			{"", "1er", "nur Einser zaehlen"},
-			{"", "2er", "nur Zweier zaehlen"},
-			{"", "3er", "nur Dreier zaehlen"},
-			{"", "4er", "nur Vierer zaehlen"},
-			{"", "5er", "nur Fuenfer zaehlen"},
-			{"", "6er", "nur Sechser zaehlen"},
-			{"", "gesamt", "          -------->"},
-			{"", "Bonus bei 63 oder mehr", "plus 35"},
-			{"", "gesamt oberer Teil", "          -------->"},
-			{"", "Dreierpasch", "Alle Augen zaehlen"},
-			{"", "Viererpasch", "Alle Augen zaehlen"},
-			{"", "Full House", "25 Punkte"},
-			{"", "Kleine Straße", "30 Punkte"},
-			{"", "Große Straße", "40 Punkte"},
-			{"", "Kniffel", "50 Punkte"},
-			{"", "Chance", "alle Augen zaehlen"},
-			{"", "gesamt unterer Teil", "          -------->"},
-			{"", "gesamt oberer Teil", "          -------->"},
-			{"", "Endsumme", "          -------->"},
+			{"Einsen", "nur Einser zaehlen", null, null, null, null, null, null},
+			{"Zweien", "nur Zweier zaehlen", null, null, null, null, null, null},
+			{"Dreien", "nur Dreier zaehlen", null, null, null, null, null, null},
+			{"Vieren", "nur Vierer zaehlen", null, null, null, null, null, null},
+			{"Fünfen", "nur Fuenfer zaehlen", null, null, null, null, null, null},
+			{"Sechsen", "nur Sechser zaehlen", null, null, null, null, null, null},
+			{"gesamt", "          -------->", null, null, null, null, null, null},
+			{"Bonus bei 63 oder mehr", "plus 35", null, null, null, null, null, null},
+			{"gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
+			{"Dreierpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
+			{"Viererpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
+			{"Full House", "25 Punkte", null, null, null, null, null, null},
+			{"Kleine Straße", "30 Punkte", null, null, null, null, null, null},
+			{"Große Straße", "40 Punkte", null, null, null, null, null, null},
+			{"Kniffel", "50 Punkte", " ", null, null, null, null, null, null},
+			{"Chance", "alle Augen zaehlen", null, null, null, null, null, null},
+			{"gesamt unterer Teil", "          -------->", null, null, null, null, null, null},
+			{"gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
+			{"Endsumme", "          -------->", null, null, null, null, null, null},
 			};
 	
 	//vor Spielstart mit Hinzufügen/Entfernen von Spielern und Startbutton
@@ -86,6 +83,8 @@ public class KniffelGUI extends JFrame{
 	private Color toggleOn = new Color(222, 106, 216);		
 	private Wurf wurf;
 	private JButton debugger;
+	private JButton ZugBestaetigen;
+	private int selRow;
 	
 	//Debugger
 	private JPanel Panel4;
@@ -107,7 +106,7 @@ public class KniffelGUI extends JFrame{
 
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
-		this.setSize(800, 800);
+		this.setSize(900, 900);
 		this.setLocation(500, 300);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Kniffel");
@@ -134,26 +133,37 @@ public class KniffelGUI extends JFrame{
 		this.add(Panel2);
 		
 		//Panel1 -> Tabelle
+		SpaltenBeschriftung[0] = "";
+		SpaltenBeschriftung[1] = "";
+		
+		for(int i = 2; i < SpaltenBeschriftung.length; i++) {
+			SpaltenBeschriftung[i] = null;
+		}
+		
 		Data = new DefaultTableModel(ReihenBeschriftung, SpaltenBeschriftung);
 		Tabelle = new JTable(Data) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
 				return false;
-			};
-			
+			}
 		};
-		
 		
 		Tabelle.setColumnSelectionAllowed(false);
 		Tabelle.setRowSelectionAllowed(false);
-		//für hinzufügen von leerer Spalte wird 0. Spalte genutzt aber nicht final hoffentlich
-		Tabelle.getColumnModel().getColumn(0).setMinWidth(0);
-		Tabelle.getColumnModel().getColumn(0).setMaxWidth(0);
-		Tabelle.getColumnModel().getColumn(0).setWidth(0);
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
+		
+		ColumnModel = Tabelle.getColumnModel();
+		for(int i = 0; i < SpaltenBeschriftung.length; i++) {
+			if(SpaltenBeschriftung[i] == null) {
+				ColumnModel.getColumn(i).setMinWidth(0);
+				ColumnModel.getColumn(i).setMaxWidth(0);
+				ColumnModel.getColumn(i).setWidth(0);
+			}
+		}
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
+		
 		
 
 		//Panel2 -> vor Spielstart Interface
@@ -231,6 +241,12 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(debugger, Gridbagconstraints);
 		debugger.addActionListener(e -> debug());
 		
+		ZugBestaetigen = new JButton("Zug bestätigen");
+		Gridbagconstraints.gridx = 7;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(ZugBestaetigen, Gridbagconstraints);
+		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
+		
 		//Panel 4 -> Debug-Modus
 		Panel4.setBackground(Color.MAGENTA);
 		lW1 = new JLabel("Würfel 1");
@@ -279,9 +295,7 @@ public class KniffelGUI extends JFrame{
 		Panel4.add(Einschreiben);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
 	}
-
 	
-
 	/*
 	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
 	 */
@@ -291,9 +305,15 @@ public class KniffelGUI extends JFrame{
 			JOptionPane.showMessageDialog(null, "Keinen Namen vergeben.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
 			spiel.addPlayer(name); //added Player in Backend
-			col = new TableColumn();
-			col.setHeaderValue(name);
-			Tabelle.addColumn(col); //added in Spalte in Frontend
+			int col = spiel.getAnzahlSpieler() + 1;
+			SpaltenBeschriftung[col] = name;
+			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
+			for(int i = col+1;i < SpaltenBeschriftung.length; i++ ) {
+				ColumnModel.getColumn(i).setMinWidth(0);
+				ColumnModel.getColumn(i).setMaxWidth(0);
+				ColumnModel.getColumn(i).setWidth(0);
+			}
+
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
 		}else {
@@ -309,9 +329,24 @@ public class KniffelGUI extends JFrame{
 		String name = ETextfeld.getText();
 		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
 		if(spielerpos != Integer.MAX_VALUE) {
-			spielerpos += 3;
-			col = Tabelle.getColumnModel().getColumn(spielerpos);
-			Tabelle.removeColumn(col); // Spalte in Frontend removed
+			spielerpos += 2;
+			SpaltenBeschriftung[spielerpos] = null;
+			int SpielerAnzahl  = spiel.getAnzahlSpieler();
+			for(int i = spielerpos; i < SpielerAnzahl+2; i++){ //+2 wegen ersten zwei Spalten = ""
+				String temp = SpaltenBeschriftung[i];
+				SpaltenBeschriftung[i] = SpaltenBeschriftung[i+1];
+				SpaltenBeschriftung[i+1] = temp;
+			}
+
+			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
+			for(int i = 0; i < SpaltenBeschriftung.length; i++) {
+				if(SpaltenBeschriftung[i] == null) {
+					ColumnModel.getColumn(i).setMinWidth(0);
+					ColumnModel.getColumn(i).setMaxWidth(0);
+					ColumnModel.getColumn(i).setWidth(0);
+				}
+			}
+			
 			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
 		} else {
@@ -333,11 +368,12 @@ public class KniffelGUI extends JFrame{
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					if(!lsm.isSelectionEmpty()) {
-						int selRow = lsm.getMinSelectionIndex();
+						selRow = lsm.getMinSelectionIndex();
 						System.out.println(selRow);
 					}
 				}
 			});
+			
 			revalidate();
 		} else {
 			JOptionPane.showMessageDialog(null, "Es müssen mehr als Null Spieler teilnehmen.");
@@ -355,6 +391,57 @@ public class KniffelGUI extends JFrame{
 		Wuerfel4.setText(Integer.toString(wurf.get(3)));
 		Wuerfel5.setText(Integer.toString(wurf.get(4)));
 		
+	}
+	
+	private void GUI_ZugBestaetigen() {
+		//Hand einschreiben in Tabelle
+		int spieler = spiel.getCurSpieler();
+		System.out.println("[gui_zugbestätigen] curSpiel " + spieler);
+		System.out.println("[gui_zugbestätigen] selRow " + selRow);
+		System.out.println("[gui_zugbestätigen] Reihe selRow sp+0 " + ReihenBeschriftung[selRow][spieler+0]);
+		System.out.println("[gui_zugbestätigen] Reihe selRow sp+1 " +ReihenBeschriftung[selRow][spieler+1]);
+		System.out.println("[gui_zugbestätigen] Reihe selRow sp+2 " +ReihenBeschriftung[selRow][spieler+2]);
+		if(selRow != 6 && selRow != 7 && selRow != 8 && selRow != 16 && selRow != 17 && selRow != 18 && ReihenBeschriftung[selRow][spieler+2] == null) {
+			System.out.println("[gui_zugbestätigen] GetWert " + spiel.getWert((String)ReihenBeschriftung[selRow][0]));
+			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[selRow][0]), selRow, spieler+2);
+			spiel.nextPlayer();
+			Wuerfel1.setText(" ");
+			Wuerfel2.setText(" ");
+			Wuerfel3.setText(" ");
+			Wuerfel4.setText(" ");
+			Wuerfel5.setText(" ");
+		}else {
+			System.out.println("Falscher Zug");
+		}
+		
+		int SumOben = 0;
+		int SumUnten = 0;
+		int SumOverall = 0;
+		int SpielerAnzahl = spiel.getAnzahlSpieler();
+		for(int i = 2; i < SpielerAnzahl+2; i++) {
+			for(int j = 0; j < 5; j++) {
+				if(Data.getValueAt(j, i) != null) {
+					SumOben += (int)Data.getValueAt(j, i);
+				}
+			}
+			
+			Data.setValueAt(SumOben, 6, i);
+			if(SumOben >= 63) {
+				Data.setValueAt(35, 7, i);
+				SumOben += 35;
+				Data.setValueAt(SumOben, 8, i);
+			}
+			
+			for(int j = 9; j < 16; j++) {
+				if(Data.getValueAt(j, i) != null) {
+					SumUnten += (int)Data.getValueAt(j, i);
+				}
+			}
+			
+			Data.setValueAt(SumUnten, 16, i);
+			Data.setValueAt(SumOben, 17, i);
+			Data.setValueAt(SumOverall, 18, i);
+		}
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {
@@ -378,22 +465,18 @@ public class KniffelGUI extends JFrame{
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
 		spiel.setCurSpieler(Spieler.getText());
-		//spiel.printAll(debug_wurf);
 		int spieler = spiel.getCurSpieler();
-		int tabellenplatz = spieler+3;
-		System.out.println("[gui] Wurf: " + spiel.getCurWurf() + " Spieler: " + spiel.getCurSpieler() + " Tabellenplatz: " + tabellenplatz);
-		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
-		//Tabelle.setValueAt(spiel.getWert(Hand.getText()), 10, tabellenplatz);
-		/*
-		if(spiel.handSpielen(Hand.getText())){
-			System.out.println("Erfolgreich gespielt");
-		}else {
-			System.out.println("Keine Hand gespielt");
+		int Spalte = spieler+2;
+		int Reihe = Integer.MAX_VALUE;
+		System.out.println(ReihenBeschriftung.length);
+		for(int i = 0; i < ReihenBeschriftung.length; i++) {
+			if(ReihenBeschriftung[i][0].equals(Hand.getText())) {
+				Reihe = i;
+			}
 		}
-		*/
-		repaint();
-		
-		
+		System.out.println("[gui] Wurf: " + spiel.getCurWurf() + " Spieler: " + spiel.getCurSpieler() + " Tabellenplatz: " + Spalte);
+		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
+		Data.setValueAt(spiel.getWert(Hand.getText()), Reihe, Spalte);
 	}
 	
 }

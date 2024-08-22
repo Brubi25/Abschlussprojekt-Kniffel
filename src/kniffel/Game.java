@@ -30,7 +30,7 @@ public class Game {
 	}
 	
 	public int nextPlayer() {
-		return curSpieler = (curSpieler + 1) % spieler.length;
+		return curSpieler = (curSpieler + 1) % anzSpieler;
 	}
 	
 	public int getCurSpieler() {
@@ -108,13 +108,6 @@ public class Game {
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
-		
-		//nur für testen
-		Wurf test = g.wurfeln(); 
-		System.out.println(test);
-		boolean[] t = {false, true, true, true, false};
-		test = g.wurfeln(t);
-		System.out.println(test);
 		gui.setVisible(true);
 	}
 }

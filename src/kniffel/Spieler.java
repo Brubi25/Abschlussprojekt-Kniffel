@@ -15,13 +15,13 @@ public class Spieler {
 		Haende.put("Zweien", Zweien.getInstance());
 		Haende.put("Dreien", Dreien.getInstance());
 		Haende.put("Vieren", Vieren.getInstance());
-		Haende.put("Fuenfen", Fuenfen.getInstance());
+		Haende.put("Fünfen", Fuenfen.getInstance());
 		Haende.put("Sechsen", Sechsen.getInstance());
-		Haende.put("DreierPasch", DreierPasch.getInstance());
-		Haende.put("ViererPasch", ViererPasch.getInstance());
-		Haende.put("FullHouse", FullHouse.getInstance());
-		Haende.put("KleineStrasse", KleineStrasse.getInstance());
-		Haende.put("GrosseStrasse", GrosseStrasse.getInstance());
+		Haende.put("Dreierpasch", DreierPasch.getInstance());
+		Haende.put("Viererpasch", ViererPasch.getInstance());
+		Haende.put("Full House", FullHouse.getInstance());
+		Haende.put("Kleine Straße", KleineStrasse.getInstance());
+		Haende.put("Große Straße", GrosseStrasse.getInstance());
 		Haende.put("Kniffel", Kniffel.getInstance());
 		Haende.put("Chance", Chance.getInstance());
 	}
