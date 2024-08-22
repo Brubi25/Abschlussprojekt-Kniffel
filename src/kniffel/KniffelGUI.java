@@ -164,8 +164,6 @@ public class KniffelGUI extends JFrame{
 		}
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
 		
-		
-
 		//Panel2 -> vor Spielstart Interface
 		Panel2.setBackground(Color.blue);
 				
