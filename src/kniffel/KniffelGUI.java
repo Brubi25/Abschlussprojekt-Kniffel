@@ -136,7 +136,6 @@ public class KniffelGUI extends JFrame{
 		//Panel1 -> Tabelle
 		SpaltenBeschriftung[0] = "";
 		SpaltenBeschriftung[1] = "";
-		
 		for(int i = 2; i < SpaltenBeschriftung.length; i++) {
 			SpaltenBeschriftung[i] = null;
 		}
@@ -317,7 +316,6 @@ public class KniffelGUI extends JFrame{
 				ColumnModel.getColumn(i).setMaxWidth(0);
 				ColumnModel.getColumn(i).setWidth(0);
 			}
-
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
 		}else {
@@ -341,7 +339,6 @@ public class KniffelGUI extends JFrame{
 				SpaltenBeschriftung[i] = SpaltenBeschriftung[i+1];
 				SpaltenBeschriftung[i+1] = temp;
 			}
-
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			for(int i = 0; i < SpaltenBeschriftung.length; i++) {
 				if(SpaltenBeschriftung[i] == null) {
@@ -350,7 +347,6 @@ public class KniffelGUI extends JFrame{
 					ColumnModel.getColumn(i).setWidth(0);
 				}
 			}
-			
 			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
 		} else {
@@ -474,8 +470,7 @@ public class KniffelGUI extends JFrame{
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
 		spiel.setCurSpieler(Spieler.getText());
-		int spieler = spiel.getCurSpieler();
-		int Spalte = spieler+2;
+		int Spalte = spiel.getCurSpieler()+2;
 		int Reihe = Integer.MAX_VALUE;
 		System.out.println(ReihenBeschriftung.length);
 		for(int i = 0; i < ReihenBeschriftung.length; i++) {
