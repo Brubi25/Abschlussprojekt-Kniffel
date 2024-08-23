@@ -103,7 +103,10 @@ public class KniffelGUI extends JFrame{
 	private JTextField W4;
 	private JLabel lW5;
 	private JTextField W5;
-
+	private JButton Exit;
+	
+	
+	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
 		this.setSize(900, 900);
@@ -128,6 +131,7 @@ public class KniffelGUI extends JFrame{
 		
 		Panel4 = new JPanel();
 		Panel4.setLayout(new GridLayout(3,5));
+		
 		
 		this.add(Panel1);
 		this.add(Panel2);
@@ -292,7 +296,12 @@ public class KniffelGUI extends JFrame{
 		Einschreiben = new JButton("Werte einschreiben");
 		Panel4.add(Einschreiben);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
+		
+		Exit = new JButton("Zurück");
+		Panel4.add(Exit);
+		Exit.addActionListener(e -> debug_exit());
 	}
+	
 	
 	/*
 	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
@@ -457,6 +466,13 @@ public class KniffelGUI extends JFrame{
 		add(Panel4);
 		revalidate();
 	}
+	
+	private void debug_exit() {
+		remove(Panel4);
+		add(Panel3);
+		validate();
+	}
+
 	
 	private void debug_einschreiben() {
 		int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
