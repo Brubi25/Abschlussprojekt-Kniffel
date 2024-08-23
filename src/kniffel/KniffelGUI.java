@@ -26,7 +26,6 @@ public class KniffelGUI extends JFrame{
 	public void WuerfelMalen(int num) {
 		
 	}
-	
 	private Game spiel;
 	
 	//Tabelle mit Werten
@@ -106,7 +105,6 @@ public class KniffelGUI extends JFrame{
 	private JButton Exit;
 	
 	
-	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
 		this.setSize(900, 900);
@@ -130,8 +128,7 @@ public class KniffelGUI extends JFrame{
 		Panel3.setLayout(Gridbaglayout);
 		
 		Panel4 = new JPanel();
-		Panel4.setLayout(new GridLayout(3,5));
-		
+		Panel4.setLayout(new GridLayout(4,5));
 		
 		this.add(Panel1);
 		this.add(Panel2);
@@ -397,7 +394,6 @@ public class KniffelGUI extends JFrame{
 		Wuerfel3.setText(Integer.toString(wurf.get(2)));
 		Wuerfel4.setText(Integer.toString(wurf.get(3)));
 		Wuerfel5.setText(Integer.toString(wurf.get(4)));
-		
 	}
 	
 	private void GUI_ZugBestaetigen() {
@@ -473,7 +469,6 @@ public class KniffelGUI extends JFrame{
 		validate();
 	}
 
-	
 	private void debug_einschreiben() {
 		int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
 		Wurf debug_wurf = new Wurf(debug_zahlen);
@@ -492,5 +487,4 @@ public class KniffelGUI extends JFrame{
 		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
 		Data.setValueAt(spiel.getWert(Hand.getText()), Reihe, Spalte);
 	}
-	
 }
