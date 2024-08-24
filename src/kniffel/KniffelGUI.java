@@ -509,6 +509,15 @@ public class KniffelGUI extends JFrame{
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
 		spiel.setCurSpieler(Spieler.getText());
+		if(spiel.handSpielen(Hand.getText())) {
+			System.out.println("Hand gespielt");
+		} else {
+			System.out.println("Falsche Eingabe");
+		}
+			
+		
+			
+		
 		int Spalte = spiel.getCurSpieler()+2;
 		int Reihe = Integer.MAX_VALUE;
 		System.out.println(ReihenBeschriftung.length);

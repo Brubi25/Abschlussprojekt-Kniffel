@@ -19,7 +19,6 @@ public class Game {
 	 */
 	public boolean handSpielen(String hand) {
 		if(spieler[curSpieler].play(hand, this.curWurf)) {
-			nextPlayer();
 			return true;
 		}
 		return false;
