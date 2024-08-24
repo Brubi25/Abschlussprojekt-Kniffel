@@ -551,6 +551,4 @@ public class KniffelGUI extends JFrame{
 		}
 		repaint();
 	}
-	
-
 }
