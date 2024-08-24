@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -37,6 +38,7 @@ public class KniffelGUI extends JFrame{
 	private ListSelectionModel lsm;
 	private String[] SpaltenBeschriftung = new String[8];
 	private Object[][] ReihenBeschriftung = {
+
 			{"Einsen", "nur Einser zaehlen", null, null, null, null, null, null},
 			{"Zweien", "nur Zweier zaehlen", null, null, null, null, null, null},
 			{"Dreien", "nur Dreier zaehlen", null, null, null, null, null, null},
@@ -57,6 +59,7 @@ public class KniffelGUI extends JFrame{
 			{"gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
 			{"Endsumme", "          -------->", null, null, null, null, null, null},
 			};
+	private DefaultTableCellRenderer DTCF;
 	
 	//vor Spielstart mit Hinzufügen/Entfernen von Spielern und Startbutton
 	private JPanel Panel2;
@@ -164,6 +167,10 @@ public class KniffelGUI extends JFrame{
 				ColumnModel.getColumn(i).setWidth(0);
 			}
 		}
+		
+		DTCF = new DefaultTableCellRenderer();
+		DTCF.setBackground(Color.red);
+		
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
 		
 		//Panel2 -> vor Spielstart Interface
@@ -410,7 +417,7 @@ public class KniffelGUI extends JFrame{
 					}
 				}
 			});
-			
+			CurSpielerMarkieren();
 			revalidate();
 		} else {
 			JOptionPane.showMessageDialog(null, "Es müssen mehr als Null Spieler teilnehmen.");
@@ -440,7 +447,12 @@ public class KniffelGUI extends JFrame{
 		if(selRow != 6 && selRow != 7 && selRow != 8 && selRow != 16 && selRow != 17 && selRow != 18 && ReihenBeschriftung[selRow][spieler+2] == null) {
 			System.out.println("[gui_zugbestätigen] GetWert " + spiel.getWert((String)ReihenBeschriftung[selRow][0]));
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[selRow][0]), selRow, spieler+2);
+			CurSpielerMarkieren();
 			spiel.nextPlayer();
+			
+			//Highlight Player
+			CurSpielerMarkieren();
+			
 			Wuerfel1.setText(" ");
 			Wuerfel2.setText(" ");
 			Wuerfel3.setText(" ");
@@ -514,10 +526,7 @@ public class KniffelGUI extends JFrame{
 		} else {
 			System.out.println("Falsche Eingabe");
 		}
-			
-		
-			
-		
+	
 		int Spalte = spiel.getCurSpieler()+2;
 		int Reihe = Integer.MAX_VALUE;
 		System.out.println(ReihenBeschriftung.length);
@@ -530,4 +539,15 @@ public class KniffelGUI extends JFrame{
 		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
 		Data.setValueAt(spiel.getWert(Hand.getText()), Reihe, Spalte);
 	}
+	
+	private void CurSpielerMarkieren() {
+		if(ColumnModel.getColumn(spiel.getCurSpieler()+2).getHeaderRenderer()==DTCF) {
+			ColumnModel.getColumn(spiel.getCurSpieler()+2).setHeaderRenderer(ColumnModel.getColumn(0).getHeaderRenderer());
+		} else {
+			ColumnModel.getColumn(spiel.getCurSpieler()+2).setHeaderRenderer(DTCF);
+		}
+		repaint();
+	}
+	
+
 }
