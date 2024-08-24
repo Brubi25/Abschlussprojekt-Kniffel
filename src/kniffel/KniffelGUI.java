@@ -87,6 +87,7 @@ public class KniffelGUI extends JFrame{
 	private JButton debugger;
 	private JButton ZugBestaetigen;
 	private int selRow;
+	private int anzGewurfelt;
 	
 	//Debugger
 	private JPanel Panel4;
@@ -425,17 +426,18 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_wuerfeln(boolean[] wuerfel) {
-		wurf = spiel.wurfeln(wuerfel);
-		System.out.println(wurf);
-		System.out.println(wurf.sumOfAll());
-		
-		Wuerfel1.setText(Integer.toString(wurf.get(0)));
-		Wuerfel2.setText(Integer.toString(wurf.get(1)));
-		Wuerfel3.setText(Integer.toString(wurf.get(2)));
-		Wuerfel4.setText(Integer.toString(wurf.get(3)));
-		Wuerfel5.setText(Integer.toString(wurf.get(4)));
+		if (spiel.getAnzGewurfelt() < 3) {
+			wurf = spiel.wurfeln(wuerfel);
+			Wuerfel1.setText(Integer.toString(wurf.get(0)));
+			Wuerfel2.setText(Integer.toString(wurf.get(1)));
+			Wuerfel3.setText(Integer.toString(wurf.get(2)));
+			Wuerfel4.setText(Integer.toString(wurf.get(3)));
+			Wuerfel5.setText(Integer.toString(wurf.get(4)));
+		} else {
+			System.out.println("Du kannst maximal 3 mal Würfeln");
+		}
 	}
-	
+
 	private void GUI_ZugBestaetigen() {
 		//Hand einschreiben in Tabelle
 		int spieler = spiel.getCurSpieler();
@@ -452,6 +454,7 @@ public class KniffelGUI extends JFrame{
 			
 			//Highlight Player
 			CurSpielerMarkieren();
+			spiel.resetAnzGewurfelt();
 			
 			Wuerfel1.setText(" ");
 			Wuerfel2.setText(" ");

@@ -5,13 +5,16 @@ public class Game {
 	private int anzSpieler;
 	private int curSpieler;
 	private Wurf curWurf;
+	private int anzGewurfelt;
 	
 	Game(){
 		spieler = new Spieler[6];
 		anzSpieler = 0;
 		//debug
 		curSpieler = 0;
+		anzGewurfelt = 0;
 	}
+	
 	/**
 	 * Spielt Hand
 	 * @param hand
@@ -43,9 +46,11 @@ public class Game {
 	public Wurf wurfeln(boolean[] wurfel) {
 		if(this.curWurf == null) {
 			this.wurfeln();
+			anzGewurfelt++;
 			return this.curWurf;
 		}
 		this.curWurf.neuWuerfeln(wurfel);
+		anzGewurfelt++;
 		return this.curWurf;
 	}
 	
@@ -104,9 +109,18 @@ public class Game {
 		return this.anzSpieler;
 	}
 	
+	public int getAnzGewurfelt() {
+		return this.anzGewurfelt;
+	}
+	
+	public void resetAnzGewurfelt() {
+		this.anzGewurfelt = 0;
+	}
+	
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
 		gui.setVisible(true);
 	}
+
 }
