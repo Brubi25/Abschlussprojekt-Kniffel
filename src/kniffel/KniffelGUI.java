@@ -128,7 +128,9 @@ public class KniffelGUI extends JFrame{
 		Panel3.setLayout(Gridbaglayout);
 		
 		Panel4 = new JPanel();
-		Panel4.setLayout(new GridLayout(4,5));
+		Gridbaglayout.setConstraints(Panel4, Gridbagconstraints);
+		Panel4.setLayout(Gridbaglayout);
+		
 		
 		this.add(Panel1);
 		this.add(Panel2);
@@ -247,54 +249,89 @@ public class KniffelGUI extends JFrame{
 		
 		//Panel 4 -> Debug-Modus
 		Panel4.setBackground(Color.MAGENTA);
+		Gridbagconstraints.fill = GridBagConstraints.BOTH;
+		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
 		lW1 = new JLabel("Würfel 1");
-		Panel4.add(lW1);
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 0;
+		Panel4.add(lW1, Gridbagconstraints);
 
 		lW2 = new JLabel("Würfel 2");
-		Panel4.add(lW2);
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 0;
+		Panel4.add(lW2, Gridbagconstraints);
 		
 		lW3 = new JLabel("Würfel 3");
-		Panel4.add(lW3);
+		Gridbagconstraints.gridx = 2;
+		Gridbagconstraints.gridy = 0;
+		Panel4.add(lW3, Gridbagconstraints);
 
 		lW4 = new JLabel("Würfel 4");
-		Panel4.add(lW4);
+		Gridbagconstraints.gridx = 3;
+		Gridbagconstraints.gridy = 0;
+		Panel4.add(lW4, Gridbagconstraints);
 
 		lW5 = new JLabel("Würfel 5");
-		Panel4.add(lW5);
+		Gridbagconstraints.gridx = 4;
+		Gridbagconstraints.gridy = 0;
+		Panel4.add(lW5, Gridbagconstraints);
 		
 		W1 = new JTextField();
-		Panel4.add(W1);
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(W1, Gridbagconstraints);
 		
 		W2 = new JTextField();
-		Panel4.add(W2);
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(W2, Gridbagconstraints);
 		
 		W3 = new JTextField();
-		Panel4.add(W3);
+		Gridbagconstraints.gridx = 2;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(W3, Gridbagconstraints);
 		
 		W4 = new JTextField();
-		Panel4.add(W4);
+		Gridbagconstraints.gridx = 3;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(W4, Gridbagconstraints);
 		
 		W5 = new JTextField();
-		Panel4.add(W5);
+		Gridbagconstraints.gridx = 4;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(W5, Gridbagconstraints);
 	
 		Ls = new JLabel("Spieler");
-		Panel4.add(Ls);
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 2;
+		Panel4.add(Ls, Gridbagconstraints);
 		
 		Spieler = new JTextField();
-		Panel4.add(Spieler);
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 2;
+		Panel4.add(Spieler, Gridbagconstraints);
 		
 		Lh = new JLabel("Hand");
-		Panel4.add(Lh);
+		Gridbagconstraints.gridx = 2;
+		Gridbagconstraints.gridy = 2;
+		Panel4.add(Lh, Gridbagconstraints);
 		
 		Hand = new JTextField();
-		Panel4.add(Hand);
+		Gridbagconstraints.gridx = 3;
+		Gridbagconstraints.gridy = 2;
+		
+		Panel4.add(Hand, Gridbagconstraints);
 		
 		Einschreiben = new JButton("Werte einschreiben");
-		Panel4.add(Einschreiben);
+		Gridbagconstraints.gridx = 4;
+		Gridbagconstraints.gridy = 2;
+		Panel4.add(Einschreiben, Gridbagconstraints);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
 		
 		Exit = new JButton("Zurück");
-		Panel4.add(Exit);
+		Gridbagconstraints.gridx = 5;
+		Gridbagconstraints.gridy = 1;
+		Panel4.add(Exit, Gridbagconstraints);
 		Exit.addActionListener(e -> debug_exit());
 	}
 	
@@ -457,12 +494,14 @@ public class KniffelGUI extends JFrame{
 		remove(Panel3);
 		add(Panel4);
 		revalidate();
+		repaint();
 	}
 	
 	private void debug_exit() {
 		remove(Panel4);
 		add(Panel3);
-		validate();
+		revalidate();
+		repaint();
 	}
 
 	private void debug_einschreiben() {
