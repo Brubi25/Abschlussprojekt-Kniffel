@@ -160,13 +160,7 @@ public class KniffelGUI extends JFrame{
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		
 		ColumnModel = Tabelle.getColumnModel();
-		for(int i = 0; i < SpaltenBeschriftung.length; i++) {
-			if(SpaltenBeschriftung[i] == null) {
-				ColumnModel.getColumn(i).setMinWidth(0);
-				ColumnModel.getColumn(i).setMaxWidth(0);
-				ColumnModel.getColumn(i).setWidth(0);
-			}
-		}
+		TabelleFormatieren();
 		
 		DTCF = new DefaultTableCellRenderer();
 		DTCF.setBackground(Color.red);
@@ -355,14 +349,11 @@ public class KniffelGUI extends JFrame{
 			int col = spiel.getAnzahlSpieler() + 1;
 			SpaltenBeschriftung[col] = name;
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
-			for(int i = col+1;i < SpaltenBeschriftung.length; i++ ) {
-				ColumnModel.getColumn(i).setMinWidth(0);
-				ColumnModel.getColumn(i).setMaxWidth(0);
-				ColumnModel.getColumn(i).setWidth(0);
-			}
+			TabelleFormatieren();
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
 		}else {
+			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Maximale Spieleranzahl erreicht.");
 		}
 	}
@@ -384,16 +375,11 @@ public class KniffelGUI extends JFrame{
 				SpaltenBeschriftung[i+1] = temp;
 			}
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
-			for(int i = 0; i < SpaltenBeschriftung.length; i++) {
-				if(SpaltenBeschriftung[i] == null) {
-					ColumnModel.getColumn(i).setMinWidth(0);
-					ColumnModel.getColumn(i).setMaxWidth(0);
-					ColumnModel.getColumn(i).setWidth(0);
-				}
-			}
+			TabelleFormatieren();
 			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
 		} else {
+			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Spieler nicht vorhanden.");
 		}
 	}
@@ -413,7 +399,6 @@ public class KniffelGUI extends JFrame{
 				public void valueChanged(ListSelectionEvent e) {
 					if(!lsm.isSelectionEmpty()) {
 						selRow = lsm.getMinSelectionIndex();
-						System.out.println("[gui] selRow: " + selRow);
 					}
 				}
 			});
@@ -425,7 +410,6 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_wuerfeln(boolean[] wuerfel) {
-		int spieler = spiel.getCurSpieler();
 		if (spiel.getAnzGewurfelt() < 3) {
 			wurf = spiel.wurfeln(wuerfel);
 			Wuerfel1.setText(Integer.toString(wurf.get(0)));
@@ -433,52 +417,23 @@ public class KniffelGUI extends JFrame{
 			Wuerfel3.setText(Integer.toString(wurf.get(2)));
 			Wuerfel4.setText(Integer.toString(wurf.get(3)));
 			Wuerfel5.setText(Integer.toString(wurf.get(4)));
-			for(int i = 0; i < 16; i++) {
-				if(i == 6) {
-					i += 3;
-				}
-				System.out.println("[gui] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
-				Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
-			}
-			
-			
+			VorgeschlageneWerteAnzeigen();
 		} else {
-			System.out.println("Du kannst maximal 3 mal Würfeln");
+			JOptionPane.showMessageDialog(null, "Du kannst maximal 3 mal Würfeln");
 		}
 	}
 
 	private void GUI_ZugBestaetigen() {
-		int spieler = spiel.getCurSpieler();
 		String hand = (String)ReihenBeschriftung[selRow][0];
 		if(spiel.handSpielen(hand)) {
-			System.out.println("[gui] WertgespielteHand: " + spiel.getGespielterWert(hand));
 			CurSpielerMarkieren();
-	
-			for(int i = 0; i < 16; i++) {
-				if(i == 6) {
-					i += 3;
-				}
-				System.out.println("[gui Normal] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
-				Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
-			}
-			
+			EingeschriebeneWerteAnzeigen();
 			spiel.nextPlayer();
 			CurSpielerMarkieren();
 			spiel.resetAnzGewurfelt();
-			
-			WuerfelReRoll = new boolean[]{true, true, true, true, true, true};
-			Wuerfel1.setText(" ");
-			Wuerfel1.setBackground(toggleOn);
-			Wuerfel2.setText(" ");
-			Wuerfel2.setBackground(toggleOn);
-			Wuerfel3.setText(" ");
-			Wuerfel3.setBackground(toggleOn);
-			Wuerfel4.setText(" ");
-			Wuerfel4.setBackground(toggleOn);
-			Wuerfel5.setText(" ");
-			Wuerfel5.setBackground(toggleOn);
+			GUIWuerfelReset();
 		}else {
-			System.out.println("Falscher Zug");
+			JOptionPane.showMessageDialog(null, "Falscher Zug!");
 		}
 	}
 
@@ -493,6 +448,7 @@ public class KniffelGUI extends JFrame{
 	}
 	
 	private void debug() {
+		EingeschriebeneWerteAnzeigen();
 		remove(Panel3);
 		add(Panel4);
 		revalidate();
@@ -511,18 +467,10 @@ public class KniffelGUI extends JFrame{
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
 		spiel.setCurSpieler(Spieler.getText());
-		int spieler = spiel.getCurSpieler();
 		if(spiel.handSpielen(Hand.getText())) {
-			System.out.println("Hand gespielt");
-			for(int i = 0; i < 16; i++) {
-				if(i == 6) {
-					i += 3;
-				}
-				System.out.println("[gui debug] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
-				Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
-			}
+			EingeschriebeneWerteAnzeigen();
 		} else {
-			System.out.println("Falsche Eingabe");
+			JOptionPane.showMessageDialog(null, "Falsche Eingabe");
 		}
 	}
 	
@@ -533,5 +481,50 @@ public class KniffelGUI extends JFrame{
 			ColumnModel.getColumn(spiel.getCurSpieler()+2).setHeaderRenderer(DTCF);
 		}
 		repaint();
+	}
+	
+	private void EingeschriebeneWerteAnzeigen() {
+		int spieler = spiel.getCurSpieler();
+		for(int i = 0; i < 16; i++) {
+			if(i == 6) {
+				i += 3;
+			}
+			Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+			
+		}
+	}
+	
+	private void VorgeschlageneWerteAnzeigen() {
+		int spieler = spiel.getCurSpieler();
+		for(int i = 0; i < 16; i++) {
+			if(i == 6) {
+				i += 3;
+			}
+			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+		}
+	}
+	
+	private void TabelleFormatieren() {
+		for(int i = 0; i < SpaltenBeschriftung.length; i++) {
+			if(SpaltenBeschriftung[i] == null) {
+				ColumnModel.getColumn(i).setMinWidth(0);
+				ColumnModel.getColumn(i).setMaxWidth(0);
+				ColumnModel.getColumn(i).setWidth(0);
+			}
+		}
+	}
+	
+	private void GUIWuerfelReset() {
+		WuerfelReRoll = new boolean[]{true, true, true, true, true, true};
+		Wuerfel1.setText(" ");
+		Wuerfel1.setBackground(toggleOn);
+		Wuerfel2.setText(" ");
+		Wuerfel2.setBackground(toggleOn);
+		Wuerfel3.setText(" ");
+		Wuerfel3.setBackground(toggleOn);
+		Wuerfel4.setText(" ");
+		Wuerfel4.setBackground(toggleOn);
+		Wuerfel5.setText(" ");
+		Wuerfel5.setBackground(toggleOn);
 	}
 }
