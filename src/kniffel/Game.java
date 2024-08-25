@@ -125,6 +125,7 @@ public class Game {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
 		gui.setVisible(true);
+	
 	}
 
 }

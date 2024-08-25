@@ -432,6 +432,8 @@ public class KniffelGUI extends JFrame{
 			Wuerfel3.setText(Integer.toString(wurf.get(2)));
 			Wuerfel4.setText(Integer.toString(wurf.get(3)));
 			Wuerfel5.setText(Integer.toString(wurf.get(4)));
+			
+			
 		} else {
 			System.out.println("Du kannst maximal 3 mal Würfeln");
 		}
@@ -448,6 +450,10 @@ public class KniffelGUI extends JFrame{
 			System.out.println("[gui_zugbestätigen] GetWert " + spiel.getWert((String)ReihenBeschriftung[selRow][0]));
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[selRow][0]), selRow, spieler+2);
 			CurSpielerMarkieren();
+			
+			for(int i = 0; i < 19; i++) {
+				System.out.println("Hand: " + ReihenBeschriftung[i][0] + " Wert: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
+			}
 			spiel.nextPlayer();
 			CurSpielerMarkieren();
 			spiel.resetAnzGewurfelt();
@@ -456,10 +462,13 @@ public class KniffelGUI extends JFrame{
 			Wuerfel3.setText(" ");
 			Wuerfel4.setText(" ");
 			Wuerfel5.setText(" ");
+			
+			
 		}else {
 			System.out.println("Falscher Zug");
 		}
 		
+		/*
 		int SumOben = 0;
 		int SumUnten = 0;
 		int SumOverall = 0;
@@ -487,7 +496,9 @@ public class KniffelGUI extends JFrame{
 			Data.setValueAt(SumUnten, 16, i);
 			Data.setValueAt(SumOben, 17, i);
 			Data.setValueAt(SumOverall, 18, i);
+			
 		}
+		*/
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {

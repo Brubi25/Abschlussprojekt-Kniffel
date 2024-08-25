@@ -49,8 +49,11 @@ public class Spieler {
 	}
 	
 	public String getGespielterWert(String hand) {
-		DarstellbarerWert Wert = Haende.get(hand);
-		return Wert.isPlayable() ? "" + Wert.getValue(Wurf.defaultWurf) : "";
+		DarstellbarerWert Wert;
+		if((Wert = Haende.get(hand)) != null && !Wert.isPlayable()) {
+			return "" + Wert.getValue(null);
+		}
+		return "";
 	}
 	
 	public String getName() {
