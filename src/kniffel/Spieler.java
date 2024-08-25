@@ -48,6 +48,11 @@ public class Spieler {
 		return Haende.get(hand).getValue(W);
 	}
 	
+	public String getGespielterWert(String hand) {
+		DarstellbarerWert Wert = Haende.get(hand);
+		return Wert.isPlayable() ? "" + Wert.getValue(Wurf.defaultWurf) : "";
+	}
+	
 	public String getName() {
 		return this.name;
 	}

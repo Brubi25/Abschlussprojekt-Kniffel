@@ -31,6 +31,10 @@ public class Game {
 		return spieler[curSpieler].getWert(hand, curWurf);
 	}
 	
+	public String getGespielterWert(String hand) {
+		return spieler[curSpieler].getGespielterWert(hand);
+	}
+	
 	public int nextPlayer() {
 		return curSpieler = (curSpieler + 1) % anzSpieler;
 	}
