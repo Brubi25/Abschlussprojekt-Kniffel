@@ -82,7 +82,7 @@ public class KniffelGUI extends JFrame{
 	private Wurf wurf;
 	private JButton debugger;
 	private JButton ZugBestaetigen;
-	private int selRow;
+	private int selRow = Integer.MAX_VALUE;
 	
 	//Debugger
 	private JPanel Panel4;
@@ -432,16 +432,20 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_ZugBestaetigen() {
-		String hand = (String)ReihenBeschriftung[selRow][0];
-		if(spiel.handSpielen(hand)) {
-			CurSpielerMarkieren();
-			EingeschriebeneWerteAnzeigen();
-			spiel.nextPlayer();
-			CurSpielerMarkieren();
-			spiel.resetAnzGewurfelt();
-			GUIWuerfelReset();
+		if(selRow < ReihenBeschriftung.length) {
+			String hand = (String)ReihenBeschriftung[selRow][0];
+			if(spiel.handSpielen(hand)) {
+				CurSpielerMarkieren();
+				EingeschriebeneWerteAnzeigen();
+				spiel.nextPlayer();
+				CurSpielerMarkieren();
+				spiel.resetAnzGewurfelt();
+				GUIWuerfelReset();
+			}else {
+				JOptionPane.showMessageDialog(null, "Falscher Zug!");
+			}
 		}else {
-			JOptionPane.showMessageDialog(null, "Falscher Zug!");
+			System.out.println("ALARM");
 		}
 	}
 
