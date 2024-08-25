@@ -64,6 +64,10 @@ public class Spieler {
 		return this.name;
 	}
 	
+	public String VincentStinkt() {
+		return "trollolol";
+	}
+	
 	public boolean isFinished() {
 		for(DarstellbarerWert Wert : Haende.values()) {
 			if(Wert.isPlayable()) {
