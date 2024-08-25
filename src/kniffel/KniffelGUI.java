@@ -87,7 +87,6 @@ public class KniffelGUI extends JFrame{
 	private JButton debugger;
 	private JButton ZugBestaetigen;
 	private int selRow;
-	private int anzGewurfelt;
 	
 	//Debugger
 	private JPanel Panel4;
@@ -439,7 +438,6 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_ZugBestaetigen() {
-		//Hand einschreiben in Tabelle
 		int spieler = spiel.getCurSpieler();
 		System.out.println("[gui_zugbestätigen] curSpiel " + spieler);
 		System.out.println("[gui_zugbestätigen] selRow " + selRow);
@@ -451,11 +449,8 @@ public class KniffelGUI extends JFrame{
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[selRow][0]), selRow, spieler+2);
 			CurSpielerMarkieren();
 			spiel.nextPlayer();
-			
-			//Highlight Player
 			CurSpielerMarkieren();
 			spiel.resetAnzGewurfelt();
-			
 			Wuerfel1.setText(" ");
 			Wuerfel2.setText(" ");
 			Wuerfel3.setText(" ");
