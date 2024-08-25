@@ -23,10 +23,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class KniffelGUI extends JFrame{
-	
-	public void WuerfelMalen(int num) {
-		
-	}
 	private Game spiel;
 	
 	//Tabelle mit Werten
@@ -153,7 +149,6 @@ public class KniffelGUI extends JFrame{
 				return false;
 			}
 		};
-		
 		Tabelle.setColumnSelectionAllowed(false);
 		Tabelle.setRowSelectionAllowed(false);
 		ScrollPane = new JScrollPane(Tabelle);
@@ -392,7 +387,7 @@ public class KniffelGUI extends JFrame{
 		if(spiel.getAnzahlSpieler() != 0) {
 			remove(Panel2);
 			add(Panel3);
-			//vllt aber gibt nur Row, kann funktionieren aber nicht so top
+			//Quelle: https://www.youtube.com/watch?v=5dK4dA39INk
 			lsm = Tabelle.getSelectionModel();
 			lsm.addListSelectionListener(new ListSelectionListener() {
 				@Override
@@ -402,6 +397,7 @@ public class KniffelGUI extends JFrame{
 					}
 				}
 			});
+			//Quelle Ende
 			CurSpielerMarkieren();
 			revalidate();
 		} else {
