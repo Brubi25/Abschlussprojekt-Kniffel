@@ -63,4 +63,13 @@ public class Spieler {
 	public String getName() {
 		return this.name;
 	}
+	
+	public boolean isFinished() {
+		for(DarstellbarerWert Wert : Haende.values()) {
+			if(Wert.isPlayable()) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -125,6 +125,18 @@ public class Game {
 		this.anzGewurfelt = 0;
 	}
 	
+	public boolean isFinished() {
+		for(Spieler S : spieler) {
+			if(S == null) {
+				return true;
+			}
+			if(!S.isFinished()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static void main(String[] s) {
 		Game g = new Game();
 		KniffelGUI gui = new KniffelGUI(g);
