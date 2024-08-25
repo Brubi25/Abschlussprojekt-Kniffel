@@ -244,9 +244,21 @@ public class KniffelGUI extends JFrame{
 		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
 		
 		//Panel 4 -> Debug-Modus
+		
 		Panel4.setBackground(Color.MAGENTA);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
 		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
+		
+		/* könnte man ersetzen
+		JLabel[] wurfelLabel = new JLabel[5];
+		for(int i = 0; i < 5; i++) {
+			wurfelLabel[i] = new JLabel("Würfel " + (i+1));
+			Gridbagconstraints.gridx = 0;
+			Gridbagconstraints.gridy = 0;
+			Panel4.add(wurfelLabel[i], Gridbagconstraints);
+		}
+		*/
+		
 		lW1 = new JLabel("Würfel 1");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
