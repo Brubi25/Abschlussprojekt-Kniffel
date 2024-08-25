@@ -56,6 +56,10 @@ public class Spieler {
 		return "";
 	}
 	
+	public boolean isPlayeble(String hand) {
+		return Haende.get(hand).isPlayable();
+	}
+	
 	public String getName() {
 		return this.name;
 	}

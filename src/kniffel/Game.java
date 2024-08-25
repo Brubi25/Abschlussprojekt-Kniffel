@@ -35,6 +35,10 @@ public class Game {
 		return spieler[curSpieler].getGespielterWert(hand);
 	}
 	
+	public boolean isPlayeble(String hand) {
+		return spieler[curSpieler].isPlayeble(hand);
+	}
+	
 	public int nextPlayer() {
 		return curSpieler = (curSpieler + 1) % anzSpieler;
 	}
