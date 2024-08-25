@@ -413,7 +413,7 @@ public class KniffelGUI extends JFrame{
 				public void valueChanged(ListSelectionEvent e) {
 					if(!lsm.isSelectionEmpty()) {
 						selRow = lsm.getMinSelectionIndex();
-						System.out.println(selRow);
+						System.out.println("[gui] selRow: " + selRow);
 					}
 				}
 			});
@@ -425,6 +425,7 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_wuerfeln(boolean[] wuerfel) {
+		int spieler = spiel.getCurSpieler();
 		if (spiel.getAnzGewurfelt() < 3) {
 			wurf = spiel.wurfeln(wuerfel);
 			Wuerfel1.setText(Integer.toString(wurf.get(0)));
@@ -432,6 +433,13 @@ public class KniffelGUI extends JFrame{
 			Wuerfel3.setText(Integer.toString(wurf.get(2)));
 			Wuerfel4.setText(Integer.toString(wurf.get(3)));
 			Wuerfel5.setText(Integer.toString(wurf.get(4)));
+			for(int i = 0; i < 16; i++) {
+				if(i == 6) {
+					i += 3;
+				}
+				System.out.println("[gui] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
+				Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+			}
 			
 			
 		} else {
@@ -441,64 +449,37 @@ public class KniffelGUI extends JFrame{
 
 	private void GUI_ZugBestaetigen() {
 		int spieler = spiel.getCurSpieler();
-		System.out.println("[gui_zugbestätigen] curSpiel " + spieler);
-		System.out.println("[gui_zugbestätigen] selRow " + selRow);
-		System.out.println("[gui_zugbestätigen] Reihe selRow sp+0 " + ReihenBeschriftung[selRow][spieler+0]);
-		System.out.println("[gui_zugbestätigen] Reihe selRow sp+1 " +ReihenBeschriftung[selRow][spieler+1]);
-		System.out.println("[gui_zugbestätigen] Reihe selRow sp+2 " +ReihenBeschriftung[selRow][spieler+2]);
-		if(selRow != 6 && selRow != 7 && selRow != 8 && selRow != 16 && selRow != 17 && selRow != 18 && ReihenBeschriftung[selRow][spieler+2] == null) {
-			System.out.println("[gui_zugbestätigen] GetWert " + spiel.getWert((String)ReihenBeschriftung[selRow][0]));
-			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[selRow][0]), selRow, spieler+2);
+		String hand = (String)ReihenBeschriftung[selRow][0];
+		if(spiel.handSpielen(hand)) {
+			System.out.println("[gui] WertgespielteHand: " + spiel.getGespielterWert(hand));
 			CurSpielerMarkieren();
-			
-			for(int i = 0; i < 19; i++) {
-				System.out.println("Hand: " + ReihenBeschriftung[i][0] + " Wert: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
+	
+			for(int i = 0; i < 16; i++) {
+				if(i == 6) {
+					i += 3;
+				}
+				System.out.println("[gui Normal] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
+				Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
 			}
+			
 			spiel.nextPlayer();
 			CurSpielerMarkieren();
 			spiel.resetAnzGewurfelt();
+			
+			WuerfelReRoll = new boolean[]{true, true, true, true, true, true};
 			Wuerfel1.setText(" ");
+			Wuerfel1.setBackground(toggleOn);
 			Wuerfel2.setText(" ");
+			Wuerfel2.setBackground(toggleOn);
 			Wuerfel3.setText(" ");
+			Wuerfel3.setBackground(toggleOn);
 			Wuerfel4.setText(" ");
+			Wuerfel4.setBackground(toggleOn);
 			Wuerfel5.setText(" ");
-			
-			
+			Wuerfel5.setBackground(toggleOn);
 		}else {
 			System.out.println("Falscher Zug");
 		}
-		
-		/*
-		int SumOben = 0;
-		int SumUnten = 0;
-		int SumOverall = 0;
-		int SpielerAnzahl = spiel.getAnzahlSpieler();
-		for(int i = 2; i < SpielerAnzahl+2; i++) {
-			for(int j = 0; j < 5; j++) {
-				if(Data.getValueAt(j, i) != null) {
-					SumOben += (int)Data.getValueAt(j, i);
-				}
-			}
-			
-			Data.setValueAt(SumOben, 6, i);
-			if(SumOben >= 63) {
-				Data.setValueAt(35, 7, i);
-				SumOben += 35;
-				Data.setValueAt(SumOben, 8, i);
-			}
-			
-			for(int j = 9; j < 16; j++) {
-				if(Data.getValueAt(j, i) != null) {
-					SumUnten += (int)Data.getValueAt(j, i);
-				}
-			}
-			
-			Data.setValueAt(SumUnten, 16, i);
-			Data.setValueAt(SumOben, 17, i);
-			Data.setValueAt(SumOverall, 18, i);
-			
-		}
-		*/
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {
@@ -530,23 +511,19 @@ public class KniffelGUI extends JFrame{
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
 		spiel.setCurSpieler(Spieler.getText());
+		int spieler = spiel.getCurSpieler();
 		if(spiel.handSpielen(Hand.getText())) {
 			System.out.println("Hand gespielt");
+			for(int i = 0; i < 16; i++) {
+				if(i == 6) {
+					i += 3;
+				}
+				System.out.println("[gui debug] Hand: " + ReihenBeschriftung[i][0] + " Eingeschrieben: " + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]));
+				Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+			}
 		} else {
 			System.out.println("Falsche Eingabe");
 		}
-	
-		int Spalte = spiel.getCurSpieler()+2;
-		int Reihe = Integer.MAX_VALUE;
-		System.out.println(ReihenBeschriftung.length);
-		for(int i = 0; i < ReihenBeschriftung.length; i++) {
-			if(ReihenBeschriftung[i][0].equals(Hand.getText())) {
-				Reihe = i;
-			}
-		}
-		System.out.println("[gui] Wurf: " + spiel.getCurWurf() + " Spieler: " + spiel.getCurSpieler() + " Tabellenplatz: " + Spalte);
-		System.out.println("[gui] Wert: " + spiel.getWert(Hand.getText()));
-		Data.setValueAt(spiel.getWert(Hand.getText()), Reihe, Spalte);
 	}
 	
 	private void CurSpielerMarkieren() {
