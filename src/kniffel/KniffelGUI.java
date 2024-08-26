@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -103,6 +104,12 @@ public class KniffelGUI extends JFrame{
 	private JTextField W5;
 	private JButton Exit;
 	
+	//Panel für Spielende
+	private JPanel Panel5;
+	private JLabel GewinnerLabel;
+	private JButton NeuStartenButton;
+	private JButton BeendenButton;
+	
 	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
@@ -130,7 +137,9 @@ public class KniffelGUI extends JFrame{
 		Gridbaglayout.setConstraints(Panel4, Gridbagconstraints);
 		Panel4.setLayout(Gridbaglayout);
 		
-		
+		Panel5 = new JPanel();
+		Panel5.setLayout(new BorderLayout());
+		   
 		this.add(Panel1);
 		this.add(Panel2);
 		
@@ -243,6 +252,18 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(ZugBestaetigen, Gridbagconstraints);
 		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
 		
+		JButton test = new JButton("Testjuhu");
+		Gridbagconstraints.gridx = 8;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(test, Gridbagconstraints);
+		test.addActionListener(e -> {
+			remove(Panel3);
+			remove(Panel1);
+			add(Panel5);
+			revalidate();
+			repaint();
+		});
+		
 		//Panel 4 -> Debug-Modus
 		
 		Panel4.setBackground(Color.MAGENTA);
@@ -341,9 +362,23 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridy = 1;
 		Panel4.add(Exit, Gridbagconstraints);
 		Exit.addActionListener(e -> debug_exit());
+		
+		//Panel5 Gewinnerpanel
+		GewinnerLabel = new JLabel("", SwingConstants.CENTER);
+	    GewinnerLabel.setFont(GewinnerLabel.getFont().deriveFont(24.0f));
+	    Panel5.add(GewinnerLabel, BorderLayout.CENTER);
+	    
+	    NeuStartenButton = new JButton("Neues Spiel starten");
+	    Panel5.add(NeuStartenButton, BorderLayout.WEST);
+	    NeuStartenButton.addActionListener(e -> spielNeustart());
+
+	    BeendenButton = new JButton("Beenden");
+	    Panel5.add(BeendenButton, BorderLayout.EAST);
+	    BeendenButton.addActionListener(e -> System.exit(0));   
 	}
 	
 	
+
 	/*
 	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
 	 */
@@ -459,6 +494,11 @@ public class KniffelGUI extends JFrame{
 		}
 	}
 	
+	private Object spielNeustart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	private void debug() {
 		EingeschriebeneWerteAnzeigen();
 		remove(Panel3);
@@ -542,4 +582,5 @@ public class KniffelGUI extends JFrame{
 		Wuerfel5.setText(" ");
 		Wuerfel5.setBackground(toggleOn);
 	}
+
 }
