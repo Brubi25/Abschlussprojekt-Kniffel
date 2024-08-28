@@ -107,7 +107,7 @@ public class KniffelGUI extends JFrame{
 	//Panel für Spielende
 	private JPanel Panel5;
 	private JLabel GewinnerLabel;
-	private JButton NeuStartenButton;
+	private JButton NeustartenButton;
 	private JButton BeendenButton;
 	
 	
@@ -138,10 +138,11 @@ public class KniffelGUI extends JFrame{
 		Panel4.setLayout(Gridbaglayout);
 		
 		Panel5 = new JPanel();
-		Panel5.setLayout(new BorderLayout());
+		Panel5.setLayout(new GridBagLayout());
 		   
 		this.add(Panel1);
-		this.add(Panel2);
+//		this.add(Panel2);
+		this.add(Panel5);
 		
 		//Panel1 -> Tabelle
 		SpaltenBeschriftung[0] = "";
@@ -265,20 +266,9 @@ public class KniffelGUI extends JFrame{
 		});
 		
 		//Panel 4 -> Debug-Modus
-		
 		Panel4.setBackground(Color.MAGENTA);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
 		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
-		
-		/* könnte man ersetzen
-		JLabel[] wurfelLabel = new JLabel[5];
-		for(int i = 0; i < 5; i++) {
-			wurfelLabel[i] = new JLabel("Würfel " + (i+1));
-			Gridbagconstraints.gridx = 0;
-			Gridbagconstraints.gridy = 0;
-			Panel4.add(wurfelLabel[i], Gridbagconstraints);
-		}
-		*/
 		
 		lW1 = new JLabel("Würfel 1");
 		Gridbagconstraints.gridx = 0;
@@ -364,16 +354,26 @@ public class KniffelGUI extends JFrame{
 		Exit.addActionListener(e -> debug_exit());
 		
 		//Panel5 Gewinnerpanel
-		GewinnerLabel = new JLabel("", SwingConstants.CENTER);
-	    GewinnerLabel.setFont(GewinnerLabel.getFont().deriveFont(24.0f));
-	    Panel5.add(GewinnerLabel, BorderLayout.CENTER);
+		Panel5.setBackground(Color.pink);
+		Gridbagconstraints.insets = new Insets(5,5,5,5);
+		
+		GewinnerLabel = new JLabel("Der Gewinner ist " + spiel.getCurSpieler() + "! GZ");
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 0;
+		Gridbagconstraints.gridwidth = 3;
+	    Panel5.add(GewinnerLabel, Gridbagconstraints);
 	    
-	    NeuStartenButton = new JButton("Neues Spiel starten");
-	    Panel5.add(NeuStartenButton, BorderLayout.WEST);
-	    NeuStartenButton.addActionListener(e -> spielNeustart());
+	    NeustartenButton = new JButton("Neues Spiel starten");
+	    Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 1;
+		Gridbagconstraints.gridwidth = 1;
+	    Panel5.add(NeustartenButton, Gridbagconstraints);
+	    NeustartenButton.addActionListener(e -> spielNeustart());
 
 	    BeendenButton = new JButton("Beenden");
-	    Panel5.add(BeendenButton, BorderLayout.EAST);
+	    Gridbagconstraints.gridx = 2;
+		Gridbagconstraints.gridy = 1;
+	    Panel5.add(BeendenButton, Gridbagconstraints);
 	    BeendenButton.addActionListener(e -> System.exit(0));   
 	}
 	
@@ -582,5 +582,4 @@ public class KniffelGUI extends JFrame{
 		Wuerfel5.setText(" ");
 		Wuerfel5.setBackground(toggleOn);
 	}
-
 }
