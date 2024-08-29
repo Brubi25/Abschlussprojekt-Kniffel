@@ -137,6 +137,10 @@ public class Game {
 		return true;
 	}
 	
+	/**
+	 * Ermittelt Gewinner
+	 * @return -1, falls Spiel nicht zuende, Gewinner id sonst
+	 */
 	public int getWinner() {
 		if(!this.isFinished()) {
 			return -1;
