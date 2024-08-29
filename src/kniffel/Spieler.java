@@ -11,24 +11,24 @@ public class Spieler {
 		this.name = name;
 		
 		Haende = new Hashtable<String, DarstellbarerWert>();
-		Haende.put("Einsen", Einsen.getInstance());
-		Haende.put("Zweien", Zweien.getInstance());
-		Haende.put("Dreien", Dreien.getInstance());
-		Haende.put("Vieren", Vieren.getInstance());
-		Haende.put("Fünfen", Fuenfen.getInstance());
-		Haende.put("Sechsen", Sechsen.getInstance());
-		Haende.put("Dreierpasch", DreierPasch.getInstance());
-		Haende.put("Viererpasch", ViererPasch.getInstance());
+		Haende.put("Aces", Einsen.getInstance());
+		Haende.put("Twos", Zweien.getInstance());
+		Haende.put("Threes", Dreien.getInstance());
+		Haende.put("Fours", Vieren.getInstance());
+		Haende.put("Fives", Fuenfen.getInstance());
+		Haende.put("Sixes", Sechsen.getInstance());
+		Haende.put("Three Of A Kind", DreierPasch.getInstance());
+		Haende.put("Four Of A Kind", ViererPasch.getInstance());
 		Haende.put("Full House", FullHouse.getInstance());
-		Haende.put("Kleine Straße", KleineStrasse.getInstance());
-		Haende.put("Große Straße", GrosseStrasse.getInstance());
-		Haende.put("Kniffel", Kniffel.getInstance());
+		Haende.put("Small Straight", KleineStrasse.getInstance());
+		Haende.put("Large Straight", GrosseStrasse.getInstance());
+		Haende.put("Yahtzee", Kniffel.getInstance());
 		Haende.put("Chance", Chance.getInstance());
-		Haende.put("Gesamt", new FesterWert(0));
-		Haende.put("Gesamt oberer Teil", new FesterWert(0));
-		Haende.put("Gesamt unterer Teil", new FesterWert(0));
-		Haende.put("Endsumme", new FesterWert(0));
-		Haende.put("Bonus bei 63 oder mehr", new FesterWert(0));
+		Haende.put("Total", new FesterWert(0));
+		Haende.put("Total upper section", new FesterWert(0));
+		Haende.put("Total lower section", new FesterWert(0));
+		Haende.put("Final total", new FesterWert(0));
+		Haende.put("Bonus on 63 or more", new FesterWert(0));
 	}
 	
 	public void print(Wurf W) {
@@ -36,7 +36,7 @@ public class Spieler {
 		
 		Iterator<String> HandName = Haende.keySet().iterator();
 		for(DarstellbarerWert Wert : Haende.values()) {
-			System.out.println("\t" + HandName.next() + " (" + (Wert.isPlayable() ? "Spielbar" : "Nicht Spielbar") + "): " + (Wert.getValue(W) == 0 ? "---" : Wert.getValue(W)));
+			System.out.println("\t" + HandName.next() + " (" + (Wert.isPlayable() ? "Playable" : "Not Playable") + "): " + (Wert.getValue(W) == 0 ? "---" : Wert.getValue(W)));
 		}
 	}
 	
@@ -81,8 +81,8 @@ public class Spieler {
 	
 	public void updateSummen() {
 		int gesamtOben = 0, gesamtUnten = 0;
-		String[] heandeOben = new String[] {"Einsen","Zweien","Dreien","Vieren","Fünfen","Sechsen"};
-		String[] heandeUnten = new String[] {"Dreierpasch","Viererpasch","Full House","Kleine Straße","Große Straße","Kniffel","Chance"};
+		String[] heandeOben = new String[] {"Aces","Two","Threes","Four","Fives","Sixes"};
+		String[] heandeUnten = new String[] {"Three Of A Kind","Four Of A Kind","Full House","Small Straight","Large Straight","Yahtzee","Chance"};
 		
 		for(String S : heandeOben) {
 			if(getGespielterWert(S) == -1) {
@@ -98,19 +98,19 @@ public class Spieler {
 			gesamtUnten += getGespielterWert(S);
 		}
 		
-		Haende.put("Gesamt", new FesterWert(gesamtOben));
+		Haende.put("Total", new FesterWert(gesamtOben));
 		
 		if(gesamtOben >= 63) {
 			gesamtOben += 35;
-			Haende.put("Bonus bei 63 oder mehr", new FesterWert(35));
+			Haende.put("Bonus on 63 or more", new FesterWert(35));
 		}
 		
-		Haende.put("Gesamt oberer Teil", new FesterWert(gesamtOben));
-		Haende.put("Gesamt unterer Teil", new FesterWert(gesamtUnten));
-		Haende.put("Endsumme", new FesterWert(gesamtUnten + gesamtOben));
+		Haende.put("Total upper section", new FesterWert(gesamtOben));
+		Haende.put("Total lower section", new FesterWert(gesamtUnten));
+		Haende.put("Final total", new FesterWert(gesamtUnten + gesamtOben));
 	}
 	
 	public int getGesamt() {
-		return this.getGespielterWert("Endsumme");
+		return this.getGespielterWert("Final total");
 	}
 }

@@ -48,25 +48,25 @@ public class KniffelGUI extends JFrame{
 	private String[] SpaltenBeschriftung = new String[8];
 	private Object[][] ReihenBeschriftung = {
 
-			{"Einsen", "nur Einser zaehlen", null, null, null, null, null, null},
-			{"Zweien", "nur Zweier zaehlen", null, null, null, null, null, null},
-			{"Dreien", "nur Dreier zaehlen", null, null, null, null, null, null},
-			{"Vieren", "nur Vierer zaehlen", null, null, null, null, null, null},
-			{"Fünfen", "nur Fuenfer zaehlen", null, null, null, null, null, null},
-			{"Sechsen", "nur Sechser zaehlen", null, null, null, null, null, null},
-			{"Gesamt", "          -------->", null, null, null, null, null, null},
-			{"Bonus bei 63 oder mehr", "plus 35", null, null, null, null, null, null},
-			{"Gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
-			{"Dreierpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
-			{"Viererpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
-			{"Full House", "25 Punkte", null, null, null, null, null, null},
-			{"Kleine Straße", "30 Punkte", null, null, null, null, null, null},
-			{"Große Straße", "40 Punkte", null, null, null, null, null, null},
-			{"Kniffel", "50 Punkte", " ", null, null, null, null, null, null},
-			{"Chance", "alle Augen zaehlen", null, null, null, null, null, null},
-			{"Gesamt unterer Teil", "          -------->", null, null, null, null, null, null},
-			{"Gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
-			{"Endsumme", "          -------->", null, null, null, null, null, null},
+			{"Aces", "The sum of dice with the number 1", null, null, null, null, null, null},
+			{"Twos", "The sum of dice with the number 2", null, null, null, null, null, null},
+			{"Threes", "The sum of dice with the number 3", null, null, null, null, null, null},
+			{"Fours", "The sum of dice with the number 4", null, null, null, null, null, null},
+			{"Fives", "The sum of dice with the number 5", null, null, null, null, null, null},
+			{"Sixes", "The sum of dice with the number 5", null, null, null, null, null, null},
+			{"Total", "          -------->", null, null, null, null, null, null},
+			{"Bonus on 63 or more", "plus 35", null, null, null, null, null, null},
+			{"Total upper section", "          -------->", null, null, null, null, null, null},
+			{"Three Of A Kind", "Sum of all dice", null, null, null, null, null, null},
+			{"Four Of A Kind", "Sum of all dice", null, null, null, null, null, null},
+			{"Full House", "25 Points", null, null, null, null, null, null},
+			{"Small Straight", "30 Points", null, null, null, null, null, null},
+			{"Large Straight", "40 Points", null, null, null, null, null, null},
+			{"Yahtzee", "50 Points", " ", null, null, null, null, null, null},
+			{"Chance", "Sum of all dice", null, null, null, null, null, null},
+			{"Total lower section", "          -------->", null, null, null, null, null, null},
+			{"Total upper section", "          -------->", null, null, null, null, null, null},
+			{"Final total", "          -------->", null, null, null, null, null, null},
 			};
 	private DefaultTableCellRenderer DTCF;
 	
@@ -128,7 +128,7 @@ public class KniffelGUI extends JFrame{
 		this.setSize(900, 900);
 		this.setLocation(500, 300);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setTitle("Kniffel");
+		this.setTitle("Yahtzee");
 		this.setLayout(new GridLayout(2,1));
 		
 		Panel1 = new JPanel();
@@ -158,11 +158,11 @@ public class KniffelGUI extends JFrame{
 		
 		//Menuleiste
 		Menubar = new JMenuBar();
-		MenuFunktion = new JMenu("Funktion");
-		MenuInformation = new JMenu("Informationen");
-		Beenden = new JMenuItem("Beenden");
-		Neustarten = new JMenuItem("Neues Spiel");
-		Regeln = new JMenuItem("Regeln");
+		MenuFunktion = new JMenu("Function");
+		MenuInformation = new JMenu("Information");
+		Beenden = new JMenuItem("End Game");
+		Neustarten = new JMenuItem("New Game");
+		Regeln = new JMenuItem("Rules");
 		
 		Menubar.add(MenuFunktion);
 		Menubar.add(MenuInformation);
@@ -210,7 +210,7 @@ public class KniffelGUI extends JFrame{
 		HTextfeld.setBounds(10, 20, 100, 20);
 		Panel2.add(HTextfeld);
 		
-		Hinzufuegen = new JButton("Spieler hinzufügen");
+		Hinzufuegen = new JButton("Add Player");
 		Hinzufuegen.setBounds(130, 20, 150, 20);
 		Panel2.add(Hinzufuegen);
 		Hinzufuegen.addActionListener(e -> spielerdazu());	
@@ -219,12 +219,12 @@ public class KniffelGUI extends JFrame{
 		ETextfeld.setBounds(320, 20, 100, 20);
 		Panel2.add(ETextfeld);
 		
-		Entfernen = new JButton("Spieler entfernen");
+		Entfernen = new JButton("Remove Player");
 		Entfernen.setBounds(430, 20, 150, 20);
 		Panel2.add(Entfernen);
 		Entfernen.addActionListener(e -> spielerweg());
 		
-		Start = new JButton("Spiel starten");
+		Start = new JButton("Start Game");
 		Start.setBounds(600, 20, 150, 20);
 		Panel2.add(Start);
 		Start.addActionListener(e -> spielstarten());
@@ -266,19 +266,19 @@ public class KniffelGUI extends JFrame{
 		Wuerfel5.setBackground(toggleOn);
 		Wuerfel5.addActionListener(e -> ToggleOnOff(Wuerfel5, 4, WuerfelReRoll));
 		
-		Wuerfeln = new JButton("Würfeln");
+		Wuerfeln = new JButton("Roll Dice");
 		Gridbagconstraints.gridx = 5;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfeln, Gridbagconstraints);
 		Wuerfeln.addActionListener(e -> GUI_wuerfeln(WuerfelReRoll));
 	
-		debugger = new JButton("Debug-Modus");
+		debugger = new JButton("Debug-Mode");
 		Gridbagconstraints.gridx = 6;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(debugger, Gridbagconstraints);
 		debugger.addActionListener(e -> debug());
 		
-		ZugBestaetigen = new JButton("Zug bestätigen");
+		ZugBestaetigen = new JButton("Confirm Move");
 		Gridbagconstraints.gridx = 7;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(ZugBestaetigen, Gridbagconstraints);
@@ -301,27 +301,27 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
 		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
 		
-		lW1 = new JLabel("Würfel 1");
+		lW1 = new JLabel("Dice 1");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
 		Panel4.add(lW1, Gridbagconstraints);
 
-		lW2 = new JLabel("Würfel 2");
+		lW2 = new JLabel("Dice 2");
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 0;
 		Panel4.add(lW2, Gridbagconstraints);
 		
-		lW3 = new JLabel("Würfel 3");
+		lW3 = new JLabel("Dice 3");
 		Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
 		Panel4.add(lW3, Gridbagconstraints);
 
-		lW4 = new JLabel("Würfel 4");
+		lW4 = new JLabel("Dice 4");
 		Gridbagconstraints.gridx = 3;
 		Gridbagconstraints.gridy = 0;
 		Panel4.add(lW4, Gridbagconstraints);
 
-		lW5 = new JLabel("Würfel 5");
+		lW5 = new JLabel("Dice 5");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 0;
 		Panel4.add(lW5, Gridbagconstraints);
@@ -351,7 +351,7 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridy = 1;
 		Panel4.add(W5, Gridbagconstraints);
 	
-		Ls = new JLabel("Spieler");
+		Ls = new JLabel("Player");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 2;
 		Panel4.add(Ls, Gridbagconstraints);
@@ -372,13 +372,13 @@ public class KniffelGUI extends JFrame{
 		
 		Panel4.add(Hand, Gridbagconstraints);
 		
-		Einschreiben = new JButton("Werte einschreiben");
+		Einschreiben = new JButton("Write in values");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 2;
 		Panel4.add(Einschreiben, Gridbagconstraints);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
 		
-		Exit = new JButton("Zurück");
+		Exit = new JButton("Back");
 		Gridbagconstraints.gridx = 5;
 		Gridbagconstraints.gridy = 1;
 		Panel4.add(Exit, Gridbagconstraints);
@@ -388,20 +388,20 @@ public class KniffelGUI extends JFrame{
 		Panel5.setBackground(Color.pink);
 		Gridbagconstraints.insets = new Insets(5,5,5,5);
 		
-		GewinnerLabel = new JLabel("Der Gewinner ist " + spiel.getCurSpieler() + "! GZ");
+		GewinnerLabel = new JLabel("The winner is" + spiel.getCurSpieler() + "! GZ");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
 		Gridbagconstraints.gridwidth = 3;
 	    Panel5.add(GewinnerLabel, Gridbagconstraints);
 	    
-	    NeustartenButton = new JButton("Neues Spiel starten");
+	    NeustartenButton = new JButton("Start New Game");
 	    Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 1;
 		Gridbagconstraints.gridwidth = 1;
 	    Panel5.add(NeustartenButton, Gridbagconstraints);
 	    NeustartenButton.addActionListener(e -> SpielNeustarten());
 
-	    BeendenButton = new JButton("Beenden");
+	    BeendenButton = new JButton("End Game");
 	    Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 1;
 	    Panel5.add(BeendenButton, Gridbagconstraints);
@@ -414,7 +414,7 @@ public class KniffelGUI extends JFrame{
 	private void spielerdazu() {
 		String name = HTextfeld.getText();
 		if(name.equals("")) {
-			JOptionPane.showMessageDialog(null, "Keinen Namen vergeben.");
+			JOptionPane.showMessageDialog(null, "No name given.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
 			spiel.addPlayer(name); //added Player in Backend
 			int col = spiel.getAnzahlSpieler() + 1;
@@ -422,10 +422,10 @@ public class KniffelGUI extends JFrame{
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			TabelleFormatieren();
 			HTextfeld.setText("");
-			JOptionPane.showMessageDialog(null, "Spieler " + name + " hinzugefügt");
+			JOptionPane.showMessageDialog(null, " The Player " + name + " has been added. ");
 		}else {
 			HTextfeld.setText("");
-			JOptionPane.showMessageDialog(null, "Maximale Spieleranzahl erreicht.");
+			JOptionPane.showMessageDialog(null, "Maximum number of players reached.");
 		}
 	}
 	
@@ -448,10 +448,10 @@ public class KniffelGUI extends JFrame{
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			TabelleFormatieren();
 			ETextfeld.setText("");
-			JOptionPane.showMessageDialog(null, "Spieler " + name + " gelöscht.");
+			JOptionPane.showMessageDialog(null, "Player " + name + "deleted.");
 		} else {
 			ETextfeld.setText("");
-			JOptionPane.showMessageDialog(null, "Spieler nicht vorhanden.");
+			JOptionPane.showMessageDialog(null, "Player not available.");
 		}
 	}
 	
@@ -477,7 +477,7 @@ public class KniffelGUI extends JFrame{
 			CurSpielerMarkieren();
 			revalidate();
 		} else {
-			JOptionPane.showMessageDialog(null, "Es müssen mehr als Null Spieler teilnehmen.");
+			JOptionPane.showMessageDialog(null, "More than zero players must participate.");
 		}
 	}
 
@@ -491,7 +491,7 @@ public class KniffelGUI extends JFrame{
 			Wuerfel5.setText(Integer.toString(wurf.get(4)));
 			VorgeschlageneWerteAnzeigen();
 		} else {
-			JOptionPane.showMessageDialog(null, "Du kannst maximal 3 mal Würfeln");
+			JOptionPane.showMessageDialog(null, "You can roll the dice a maximum of 3 times");
 		}
 	}
 
@@ -506,7 +506,7 @@ public class KniffelGUI extends JFrame{
 				spiel.resetAnzGewurfelt();
 				GUIWuerfelReset();
 			}else {
-				JOptionPane.showMessageDialog(null, "Falscher Zug!");
+				JOptionPane.showMessageDialog(null, "Wrong move!");
 			}
 		}else {
 			System.out.println("ALARM");
@@ -554,7 +554,7 @@ public class KniffelGUI extends JFrame{
 		if(spiel.handSpielen(Hand.getText())) {
 			EingeschriebeneWerteAnzeigen();
 		} else {
-			JOptionPane.showMessageDialog(null, "Falsche Eingabe");
+			JOptionPane.showMessageDialog(null, "Incorrect entry");
 		}
 	}
 	
