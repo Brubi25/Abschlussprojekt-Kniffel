@@ -126,11 +126,8 @@ public class Game {
 	}
 	
 	public boolean isFinished() {
-		for(Spieler S : spieler) {
-			if(S == null) {
-				return true;
-			}
-			if(!S.isFinished()) {
+		for(int i = 0; i < this.anzSpieler; i++) {
+			if(!spieler[i].isFinished()) {
 				return false;
 			}
 		}
@@ -139,7 +136,7 @@ public class Game {
 	
 	/**
 	 * Ermittelt Gewinner
-	 * @return -1, falls Spiel nicht zuende, Gewinner id sonst
+	 * @return -1 falls Spiel nicht zuende, Gewinner id sonst
 	 */
 	public int getWinner() {
 		if(!this.isFinished()) {
