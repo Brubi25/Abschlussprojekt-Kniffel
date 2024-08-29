@@ -569,7 +569,7 @@ public class KniffelGUI extends JFrame{
 			if(i == 6) {
 				i += 3;
 			}
-			Data.setValueAt("" + spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+			Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
 			ColumnModel.getColumn(spieler+2).setCellRenderer(ColumnModel.getColumn(0).getCellRenderer());
 		}
 	}
