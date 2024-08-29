@@ -566,9 +566,6 @@ public class KniffelGUI extends JFrame{
 	private void EingeschriebeneWerteAnzeigen() {
 		int spieler = spiel.getCurSpieler();
 		for(int i = 0; i < 16; i++) {
-			if(i == 6) {
-				i += 3;
-			}
 			Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
 			ColumnModel.getColumn(spieler+2).setCellRenderer(ColumnModel.getColumn(0).getCellRenderer());
 		}
@@ -579,9 +576,6 @@ public class KniffelGUI extends JFrame{
 		DefaultTableCellRenderer test = new DefaultTableCellRenderer();
 		test.setForeground(Color.CYAN);
 		for(int i = 0; i < 16; i++) {
-			if(i == 6) {
-				i += 3;
-			}
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
 			ColumnModel.getColumn(spieler+2).setCellRenderer(test);
 		}
