@@ -2,6 +2,7 @@ package kniffel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -579,12 +580,24 @@ public class KniffelGUI extends JFrame{
 	
 	private void VorgeschlageneWerteAnzeigen() {
 		int spieler = spiel.getCurSpieler();
-		DefaultTableCellRenderer test = new DefaultTableCellRenderer();
-		test.setForeground(Color.CYAN);
+		boolean[] playeble = new boolean[19];
 		for(int i = 0; i < 19; i++) {
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
-			ColumnModel.getColumn(spieler+2).setCellRenderer(test);
+			playeble[i] = spiel.isPlayeble((String)ReihenBeschriftung[i][0]);
 		}
+		
+		ColumnModel.getColumn(spieler+2).setCellRenderer(new DefaultTableCellRenderer(){
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+		        // Formatting here
+		        setForeground(playeble[row] ? Color.CYAN : Color.black);
+
+		        return c;
+		    }
+		});
+		Tabelle.repaint();
 	}
 	
 	private void TabelleFormatieren() {
