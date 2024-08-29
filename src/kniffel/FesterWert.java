@@ -1,9 +1,9 @@
 package kniffel;
 
-public class GespielteHand implements DarstellbarerWert {
+public class FesterWert implements DarstellbarerWert {
 	private int wert;
 	
-	GespielteHand(int wert){
+	FesterWert(int wert){
 		this.wert = wert;
 	}
 	
