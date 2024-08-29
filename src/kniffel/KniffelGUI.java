@@ -53,7 +53,7 @@ public class KniffelGUI extends JFrame{
 			{"Vieren", "nur Vierer zaehlen", null, null, null, null, null, null},
 			{"Fünfen", "nur Fuenfer zaehlen", null, null, null, null, null, null},
 			{"Sechsen", "nur Sechser zaehlen", null, null, null, null, null, null},
-			{"gesamt", "          -------->", null, null, null, null, null, null},
+			{"Gesamt", "          -------->", null, null, null, null, null, null},
 			{"Bonus bei 63 oder mehr", "plus 35", null, null, null, null, null, null},
 			{"Gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
 			{"Dreierpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
@@ -152,8 +152,8 @@ public class KniffelGUI extends JFrame{
 		Panel5.setLayout(new GridBagLayout());
 		   
 		this.add(Panel1);
-//		this.add(Panel2);
-		this.add(Panel5);
+		this.add(Panel2);
+//		this.add(Panel5);
 		
 		//Menuleiste
 		Menubar = new JMenuBar();
