@@ -546,7 +546,9 @@ public class KniffelGUI extends JFrame{
 		int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
 		Wurf debug_wurf = new Wurf(debug_zahlen);
 		spiel.setCurWurf(debug_wurf);
+		CurSpielerMarkieren();
 		spiel.setCurSpieler(Spieler.getText());
+		CurSpielerMarkieren();
 		if(spiel.handSpielen(Hand.getText())) {
 			EingeschriebeneWerteAnzeigen();
 		} else {
@@ -565,8 +567,12 @@ public class KniffelGUI extends JFrame{
 	
 	private void EingeschriebeneWerteAnzeigen() {
 		int spieler = spiel.getCurSpieler();
-		for(int i = 0; i < 16; i++) {
-			Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+		for(int i = 0; i < 19; i++) {
+			if(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]) == -1) {
+				Data.setValueAt(null, i, spieler+2);
+			} else {
+				Data.setValueAt(spiel.getGespielterWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
+			}
 			ColumnModel.getColumn(spieler+2).setCellRenderer(ColumnModel.getColumn(0).getCellRenderer());
 		}
 	}
@@ -575,7 +581,7 @@ public class KniffelGUI extends JFrame{
 		int spieler = spiel.getCurSpieler();
 		DefaultTableCellRenderer test = new DefaultTableCellRenderer();
 		test.setForeground(Color.CYAN);
-		for(int i = 0; i < 16; i++) {
+		for(int i = 0; i < 19; i++) {
 			Data.setValueAt(spiel.getWert((String)ReihenBeschriftung[i][0]), i, spieler+2);
 			ColumnModel.getColumn(spieler+2).setCellRenderer(test);
 		}
