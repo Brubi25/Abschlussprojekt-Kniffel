@@ -167,12 +167,12 @@ public class KniffelGUI extends JFrame{
 		Menubar.add(MenuFunktion);
 		Menubar.add(MenuInformation);
 		MenuFunktion.add(Beenden);
-		MenuFunktion.add(Neustarten);
+//		MenuFunktion.add(Neustarten);
 		MenuInformation.add(Regeln);
 	
 		Beenden.addActionListener(e -> System.exit(0));
-		Neustarten.addActionListener(e -> {});
-		Regeln.addActionListener(e -> {});
+//		Neustarten.addActionListener(e -> SpielNeustarten());
+		Regeln.addActionListener(e -> RegelnAnzeigen());
 		this.setJMenuBar(Menubar);
 		
 		//Panel1 -> Tabelle
@@ -399,7 +399,7 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridy = 1;
 		Gridbagconstraints.gridwidth = 1;
 	    Panel5.add(NeustartenButton, Gridbagconstraints);
-	    NeustartenButton.addActionListener(e -> spielNeustart());
+	    NeustartenButton.addActionListener(e -> SpielNeustarten());
 
 	    BeendenButton = new JButton("Beenden");
 	    Gridbagconstraints.gridx = 2;
@@ -407,8 +407,6 @@ public class KniffelGUI extends JFrame{
 	    Panel5.add(BeendenButton, Gridbagconstraints);
 	    BeendenButton.addActionListener(e -> System.exit(0));   
 	}
-	
-	
 
 	/*
 	 * Nimmt String aus Textfeld und fügt Tabelle + Array hinzu, wenn Spieleranzahl < 6
@@ -525,7 +523,10 @@ public class KniffelGUI extends JFrame{
 		}
 	}
 	
-	private void spielNeustart() {
+	private void SpielNeustarten() {
+	}
+	
+	private void RegelnAnzeigen() {
 	}
 	
 	private void debug() {
@@ -590,10 +591,8 @@ public class KniffelGUI extends JFrame{
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		    {
 		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
 		        // Formatting here
 		        setForeground(playeble[row] ? Color.CYAN : Color.black);
-
 		        return c;
 		    }
 		});
