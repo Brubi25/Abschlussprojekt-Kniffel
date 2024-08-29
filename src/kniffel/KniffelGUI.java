@@ -10,6 +10,9 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,6 +28,14 @@ import javax.swing.table.TableColumnModel;
 
 public class KniffelGUI extends JFrame{
 	private Game spiel;
+	
+	//Menubar
+	private JMenuBar Menubar;
+	private JMenu MenuFunktion;
+	private JMenu MenuInformation;
+	private JMenuItem Beenden;
+	private JMenuItem Neustarten; 
+	private JMenuItem Regeln;
 	
 	//Tabelle mit Werten
 	private JPanel Panel1;
@@ -143,6 +154,25 @@ public class KniffelGUI extends JFrame{
 		this.add(Panel1);
 //		this.add(Panel2);
 		this.add(Panel5);
+		
+		//Menuleiste
+		Menubar = new JMenuBar();
+		MenuFunktion = new JMenu("Funktion");
+		MenuInformation = new JMenu("Informationen");
+		Beenden = new JMenuItem("Beenden");
+		Neustarten = new JMenuItem("Neues Spiel");
+		Regeln = new JMenuItem("Regeln");
+		
+		Menubar.add(MenuFunktion);
+		Menubar.add(MenuInformation);
+		MenuFunktion.add(Beenden);
+		MenuFunktion.add(Neustarten);
+		MenuInformation.add(Regeln);
+	
+		Beenden.addActionListener(e -> System.exit(0));
+		Neustarten.addActionListener(e -> {});
+		Regeln.addActionListener(e -> {});
+		this.setJMenuBar(Menubar);
 		
 		//Panel1 -> Tabelle
 		SpaltenBeschriftung[0] = "";
@@ -494,9 +524,7 @@ public class KniffelGUI extends JFrame{
 		}
 	}
 	
-	private Object spielNeustart() {
-		// TODO Auto-generated method stub
-		return null;
+	private void spielNeustart() {
 	}
 	
 	private void debug() {
