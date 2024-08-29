@@ -136,4 +136,21 @@ public class Game {
 		}
 		return true;
 	}
+	
+	public int getWinner() {
+		if(!this.isFinished()) {
+			return -1;
+		}
+		int gewinner = 0;
+		int punkte = 0;
+		
+		for(int i = 0; i < anzSpieler; i++) {
+			if(spieler[i].getGesamt() > punkte) {
+				gewinner = i;
+				punkte = spieler[i].getGesamt();
+			}
+		}
+		
+		return gewinner;
+	}
 }

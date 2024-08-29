@@ -103,4 +103,8 @@ public class Spieler {
 		Haende.put("Gesamt oberer Teil", new FesterWert(gesamtUnten));
 		Haende.put("Endsumme", new FesterWert(gesamtUnten + gesamtOben));
 	}
+	
+	public int getGesamt() {
+		return this.getGespielterWert("Endsumme");
+	}
 }
