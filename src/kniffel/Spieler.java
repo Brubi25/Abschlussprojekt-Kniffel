@@ -24,6 +24,7 @@ public class Spieler {
 		Haende.put("Große Straße", GrosseStrasse.getInstance());
 		Haende.put("Kniffel", Kniffel.getInstance());
 		Haende.put("Chance", Chance.getInstance());
+		Haende.put("gesamt", new FesterWert(0));
 		Haende.put("Gesamt oberer Teil", new FesterWert(0));
 		Haende.put("Gesamt unterer Teil", new FesterWert(0));
 		Haende.put("Endsumme", new FesterWert(0));
@@ -90,6 +91,8 @@ public class Spieler {
 		for(String S : heandeUnten) {
 			gesamtUnten += getGespielterWert(S);
 		}
+		
+		Haende.put("gesamt", new FesterWert(gesamtOben));
 		
 		if(gesamtOben >= 63) {
 			gesamtOben += 35;
