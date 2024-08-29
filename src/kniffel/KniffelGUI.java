@@ -55,7 +55,7 @@ public class KniffelGUI extends JFrame{
 			{"Sechsen", "nur Sechser zaehlen", null, null, null, null, null, null},
 			{"gesamt", "          -------->", null, null, null, null, null, null},
 			{"Bonus bei 63 oder mehr", "plus 35", null, null, null, null, null, null},
-			{"gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
+			{"Gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
 			{"Dreierpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
 			{"Viererpasch", "Alle Augen zaehlen", null, null, null, null, null, null},
 			{"Full House", "25 Punkte", null, null, null, null, null, null},
@@ -63,8 +63,8 @@ public class KniffelGUI extends JFrame{
 			{"Große Straße", "40 Punkte", null, null, null, null, null, null},
 			{"Kniffel", "50 Punkte", " ", null, null, null, null, null, null},
 			{"Chance", "alle Augen zaehlen", null, null, null, null, null, null},
-			{"gesamt unterer Teil", "          -------->", null, null, null, null, null, null},
-			{"gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
+			{"Gesamt unterer Teil", "          -------->", null, null, null, null, null, null},
+			{"Gesamt oberer Teil", "          -------->", null, null, null, null, null, null},
 			{"Endsumme", "          -------->", null, null, null, null, null, null},
 			};
 	private DefaultTableCellRenderer DTCF;
