@@ -48,12 +48,12 @@ public class Spieler {
 		return Haende.get(hand).getValue(W);
 	}
 	
-	public String getGespielterWert(String hand) {
+	public int getGespielterWert(String hand) {
 		DarstellbarerWert Wert;
 		if((Wert = Haende.get(hand)) != null && !Wert.isPlayable()) {
-			return "" + Wert.getValue(null);
+			return Wert.getValue(null);
 		}
-		return "";
+		return 0;
 	}
 	
 	public boolean isPlayeble(String hand) {

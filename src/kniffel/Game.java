@@ -31,7 +31,7 @@ public class Game {
 		return spieler[curSpieler].getWert(hand, curWurf);
 	}
 	
-	public String getGespielterWert(String hand) {
+	public int getGespielterWert(String hand) {
 		return spieler[curSpieler].getGespielterWert(hand);
 	}
 	
