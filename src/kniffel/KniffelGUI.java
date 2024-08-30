@@ -159,7 +159,7 @@ public class KniffelGUI extends JFrame{
 		   
 		this.add(Panel1);
 		this.add(Panel2);
-		
+
 		//Menuleiste
 		Menubar = new JMenuBar();
 		MenuFunktion = new JMenu("Function");
@@ -386,13 +386,11 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridheight = 2;
 	    Panel5.add(GewinnerLabel, Gridbagconstraints);
 	    
-	    /*
-	    BeendenButton = new JButton("End Game");
+	    BeendenButton = new JButton("Exit Game");
 	    Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
 	    Panel5.add(BeendenButton, Gridbagconstraints);
 	    BeendenButton.addActionListener(e -> System.exit(0));   
-		*/
 	}
 
 	/*
