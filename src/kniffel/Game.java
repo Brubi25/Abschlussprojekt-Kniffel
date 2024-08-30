@@ -92,13 +92,13 @@ public class Game {
 	
 	//für debug zum testen
 	public int setCurSpieler(String name) {
-		for(int i = 0; i < spieler.length; i++) {
+		for(int i = 0; i < anzSpieler; i++) {
 			if(spieler[i].getName().equals(name)){
 				this.curSpieler = i;
 				return this.curSpieler;
 			}
 		}
-		return this.getCurSpieler();
+		return -1;
 	}
 	
 	public void setCurWurf(Wurf wurf) {
@@ -153,5 +153,9 @@ public class Game {
 		}
 		
 		return gewinner;
+	}
+	
+	public String getName(int index) {
+		return spieler[index].getName();
 	}
 }

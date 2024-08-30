@@ -3,6 +3,7 @@ package kniffel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -30,12 +31,16 @@ import javax.swing.table.TableColumnModel;
 public class KniffelGUI extends JFrame{
 	private Game spiel;
 	
+	//random shit
+	private Color FarbePanelBackground = new Color(255, 202, 212); 
+	private Color FarbeCurSpieler = new Color(0, 128, 128);
+	private Color FarbeVorgeschlageneWerte = new Color(153, 237, 195);
+	
 	//Menubar
 	private JMenuBar Menubar;
 	private JMenu MenuFunktion;
 	private JMenu MenuInformation;
 	private JMenuItem Beenden;
-	private JMenuItem Neustarten; 
 	private JMenuItem Regeln;
 	
 	//Tabelle mit Werten
@@ -119,13 +124,13 @@ public class KniffelGUI extends JFrame{
 	//Panel für Spielende
 	private JPanel Panel5;
 	private JLabel GewinnerLabel;
-	private JButton NeustartenButton;
+	private Font GewinnerLabelFont = new Font("Default", Font.PLAIN, 45);
 	private JButton BeendenButton;
 	
 	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
-		this.setSize(900, 900);
+		this.setSize(900, 716);
 		this.setLocation(500, 300);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Yahtzee");
@@ -154,24 +159,20 @@ public class KniffelGUI extends JFrame{
 		   
 		this.add(Panel1);
 		this.add(Panel2);
-//		this.add(Panel5);
 		
 		//Menuleiste
 		Menubar = new JMenuBar();
 		MenuFunktion = new JMenu("Function");
 		MenuInformation = new JMenu("Information");
-		Beenden = new JMenuItem("End Game");
-		Neustarten = new JMenuItem("New Game");
+		Beenden = new JMenuItem("Exit");
 		Regeln = new JMenuItem("Rules");
 		
 		Menubar.add(MenuFunktion);
 		Menubar.add(MenuInformation);
 		MenuFunktion.add(Beenden);
-//		MenuFunktion.add(Neustarten);
 		MenuInformation.add(Regeln);
 	
 		Beenden.addActionListener(e -> System.exit(0));
-//		Neustarten.addActionListener(e -> SpielNeustarten());
 		Regeln.addActionListener(e -> RegelnAnzeigen());
 		this.setJMenuBar(Menubar);
 		
@@ -199,12 +200,13 @@ public class KniffelGUI extends JFrame{
 		TabelleFormatieren();
 		
 		DTCF = new DefaultTableCellRenderer();
-		DTCF.setBackground(Color.red);
+		DTCF.setBackground(FarbeCurSpieler);
+		DTCF.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		Panel1.add(ScrollPane, BorderLayout.CENTER);
 		
 		//Panel2 -> vor Spielstart Interface
-		Panel2.setBackground(Color.blue);
+		Panel2.setBackground(FarbePanelBackground);
 				
 		HTextfeld = new JTextField();
 		HTextfeld.setBounds(10, 20, 100, 20);
@@ -230,7 +232,7 @@ public class KniffelGUI extends JFrame{
 		Start.addActionListener(e -> spielstarten());
 		
 		//Panel3 -> während Spiel Interface
-		Panel3.setBackground(Color.green);
+		Panel3.setBackground(FarbePanelBackground);
 		Wuerfel1 = new JButton(" ");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
@@ -272,32 +274,21 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(Wuerfeln, Gridbagconstraints);
 		Wuerfeln.addActionListener(e -> GUI_wuerfeln(WuerfelReRoll));
 	
-		debugger = new JButton("Debug-Mode");
+		ZugBestaetigen = new JButton("Confirm Move");
 		Gridbagconstraints.gridx = 6;
+		Gridbagconstraints.gridy = 0;
+		Panel3.add(ZugBestaetigen, Gridbagconstraints);
+		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
+	
+		debugger = new JButton("Debug-Mode");
+		Gridbagconstraints.gridx = 7;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(debugger, Gridbagconstraints);
 		debugger.addActionListener(e -> debug());
 		
-		ZugBestaetigen = new JButton("Confirm Move");
-		Gridbagconstraints.gridx = 7;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(ZugBestaetigen, Gridbagconstraints);
-		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
-		
-		JButton test = new JButton("Testjuhu");
-		Gridbagconstraints.gridx = 8;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(test, Gridbagconstraints);
-		test.addActionListener(e -> {
-			remove(Panel3);
-			remove(Panel1);
-			add(Panel5);
-			revalidate();
-			repaint();
-		});
-		
+
 		//Panel 4 -> Debug-Modus
-		Panel4.setBackground(Color.MAGENTA);
+		Panel4.setBackground(FarbePanelBackground);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
 		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
 		
@@ -372,8 +363,8 @@ public class KniffelGUI extends JFrame{
 		
 		Panel4.add(Hand, Gridbagconstraints);
 		
-		Einschreiben = new JButton("Write in values");
-		Gridbagconstraints.gridx = 4;
+		Einschreiben = new JButton("Confirm");
+		Gridbagconstraints.gridx = 5;
 		Gridbagconstraints.gridy = 2;
 		Panel4.add(Einschreiben, Gridbagconstraints);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
@@ -385,27 +376,23 @@ public class KniffelGUI extends JFrame{
 		Exit.addActionListener(e -> debug_exit());
 		
 		//Panel5 Gewinnerpanel
-		Panel5.setBackground(Color.pink);
+		Panel5.setBackground(FarbePanelBackground);
 		Gridbagconstraints.insets = new Insets(5,5,5,5);
 		
-		GewinnerLabel = new JLabel("The winner is" + spiel.getCurSpieler() + "! GZ");
+		GewinnerLabel = new JLabel("The Winner is (insert random name)!");
+		GewinnerLabel.setFont(GewinnerLabelFont);
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
-		Gridbagconstraints.gridwidth = 3;
+		Gridbagconstraints.gridheight = 2;
 	    Panel5.add(GewinnerLabel, Gridbagconstraints);
 	    
-	    NeustartenButton = new JButton("Start New Game");
-	    Gridbagconstraints.gridx = 0;
-		Gridbagconstraints.gridy = 1;
-		Gridbagconstraints.gridwidth = 1;
-	    Panel5.add(NeustartenButton, Gridbagconstraints);
-	    NeustartenButton.addActionListener(e -> SpielNeustarten());
-
+	    /*
 	    BeendenButton = new JButton("End Game");
 	    Gridbagconstraints.gridx = 2;
-		Gridbagconstraints.gridy = 1;
+		Gridbagconstraints.gridy = 0;
 	    Panel5.add(BeendenButton, Gridbagconstraints);
 	    BeendenButton.addActionListener(e -> System.exit(0));   
+		*/
 	}
 
 	/*
@@ -499,6 +486,7 @@ public class KniffelGUI extends JFrame{
 		if(selRow < ReihenBeschriftung.length) {
 			String hand = (String)ReihenBeschriftung[selRow][0];
 			if(spiel.handSpielen(hand)) {
+				SpielFertig();
 				CurSpielerMarkieren();
 				EingeschriebeneWerteAnzeigen();
 				spiel.nextPlayer();
@@ -523,9 +511,6 @@ public class KniffelGUI extends JFrame{
 		}
 	}
 	
-	private void SpielNeustarten() {
-	}
-	
 	private void RegelnAnzeigen() {
 	}
 	
@@ -544,17 +529,25 @@ public class KniffelGUI extends JFrame{
 		repaint();
 	}
 
-	private void debug_einschreiben() {
-		int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
-		Wurf debug_wurf = new Wurf(debug_zahlen);
-		spiel.setCurWurf(debug_wurf);
-		CurSpielerMarkieren();
-		spiel.setCurSpieler(Spieler.getText());
-		CurSpielerMarkieren();
-		if(spiel.handSpielen(Hand.getText())) {
-			EingeschriebeneWerteAnzeigen();
-		} else {
-			JOptionPane.showMessageDialog(null, "Incorrect entry");
+	private void debug_einschreiben(){
+		try {
+			int[] debug_zahlen = {Integer.parseInt(W1.getText()), Integer.parseInt(W2.getText()), Integer.parseInt(W3.getText()), Integer.parseInt(W4.getText()), Integer.parseInt(W5.getText())};
+			Wurf debug_wurf = new Wurf(debug_zahlen);
+			spiel.setCurWurf(debug_wurf);
+			CurSpielerMarkieren();
+			if(spiel.setCurSpieler(Spieler.getText()) == -1) {
+				JOptionPane.showMessageDialog(null, "The Player " + Spieler.getText() + " does not exist!");
+				return;
+			}
+			CurSpielerMarkieren();
+			if(spiel.handSpielen(Hand.getText())) {
+				EingeschriebeneWerteAnzeigen();
+			} else {
+				JOptionPane.showMessageDialog(null, "Incorrect entry. Check if the throw or what you want to play is written correct.");
+				return;
+			}
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "In Dice 1-5 has to be a number.");
 		}
 	}
 	
@@ -592,7 +585,7 @@ public class KniffelGUI extends JFrame{
 		    {
 		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		        // Formatting here
-		        setForeground(playeble[row] ? Color.CYAN : Color.black);
+		        setForeground(playeble[row] ? FarbeVorgeschlageneWerte  : Color.black);
 		        return c;
 		    }
 		});
@@ -621,5 +614,14 @@ public class KniffelGUI extends JFrame{
 		Wuerfel4.setBackground(toggleOn);
 		Wuerfel5.setText(" ");
 		Wuerfel5.setBackground(toggleOn);
+	}
+	
+	private void SpielFertig() {
+		int Gewinner = spiel.getWinner();
+		if(Gewinner != -1) {
+			remove(Panel3);
+			add(Panel5);
+			GewinnerLabel.setText("The Winner is " + spiel.getName(Gewinner) + " !");
+		}
 	}
 }
