@@ -209,25 +209,25 @@ public class KniffelGUI extends JFrame{
 		Panel2.setBackground(FarbePanelBackground);
 				
 		HTextfeld = new JTextField();
-		HTextfeld.setBounds(10, 20, 100, 20);
+		HTextfeld.setBounds(15, 20, 150, 20);
 		Panel2.add(HTextfeld);
 		
 		Hinzufuegen = new JButton("Add Player");
-		Hinzufuegen.setBounds(130, 20, 150, 20);
+		Hinzufuegen.setBounds(190, 20, 150, 20);
 		Panel2.add(Hinzufuegen);
 		Hinzufuegen.addActionListener(e -> spielerdazu());	
 		
 		ETextfeld = new JTextField();
-		ETextfeld.setBounds(320, 20, 100, 20);
+		ETextfeld.setBounds(365, 20, 150, 20);
 		Panel2.add(ETextfeld);
 		
 		Entfernen = new JButton("Remove Player");
-		Entfernen.setBounds(430, 20, 150, 20);
+		Entfernen.setBounds(540, 20, 150, 20);
 		Panel2.add(Entfernen);
 		Entfernen.addActionListener(e -> spielerweg());
 		
 		Start = new JButton("Start Game");
-		Start.setBounds(600, 20, 150, 20);
+		Start.setBounds(715, 20, 150, 20);
 		Panel2.add(Start);
 		Start.addActionListener(e -> spielstarten());
 		
