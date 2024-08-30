@@ -27,7 +27,7 @@ public class Spieler {
 		Haende.put("Total", new FesterWert(0));
 		Haende.put("Total upper section", new FesterWert(0));
 		Haende.put("Total lower section", new FesterWert(0));
-		Haende.put("Final total", new FesterWert(0));
+		Haende.put("Grand total", new FesterWert(0));
 		Haende.put("Bonus on 63 or more", new FesterWert(0));
 	}
 	
@@ -81,7 +81,7 @@ public class Spieler {
 	
 	public void updateSummen() {
 		int gesamtOben = 0, gesamtUnten = 0;
-		String[] heandeOben = new String[] {"Aces","Two","Threes","Four","Fives","Sixes"};
+		String[] heandeOben = new String[] {"Aces","Twos","Threes","Fours","Fives","Sixes"};
 		String[] heandeUnten = new String[] {"Three Of A Kind","Four Of A Kind","Full House","Small Straight","Large Straight","Yahtzee","Chance"};
 		
 		for(String S : heandeOben) {
@@ -107,10 +107,10 @@ public class Spieler {
 		
 		Haende.put("Total upper section", new FesterWert(gesamtOben));
 		Haende.put("Total lower section", new FesterWert(gesamtUnten));
-		Haende.put("Final total", new FesterWert(gesamtUnten + gesamtOben));
+		Haende.put("Grand total", new FesterWert(gesamtUnten + gesamtOben));
 	}
 	
 	public int getGesamt() {
-		return this.getGespielterWert("Final total");
+		return this.getGespielterWert("Grand total");
 	}
 }

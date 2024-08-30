@@ -71,7 +71,7 @@ public class KniffelGUI extends JFrame{
 			{"Chance", "Sum of all dice", null, null, null, null, null, null},
 			{"Total lower section", "          -------->", null, null, null, null, null, null},
 			{"Total upper section", "          -------->", null, null, null, null, null, null},
-			{"Final total", "          -------->", null, null, null, null, null, null},
+			{"Grand total", "          -------->", null, null, null, null, null, null},
 			};
 	private DefaultTableCellRenderer DTCF;
 	
