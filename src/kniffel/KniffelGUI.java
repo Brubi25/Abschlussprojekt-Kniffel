@@ -346,32 +346,32 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 2;
 		Panel4.add(Ls, Gridbagconstraints);
+
+		Lh = new JLabel("Hand");
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 3;
+		Panel4.add(Lh, Gridbagconstraints);
 		
 		Spieler = new JTextField();
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 2;
+		Gridbagconstraints.gridwidth = 4;
 		Panel4.add(Spieler, Gridbagconstraints);
-		
-		Lh = new JLabel("Hand");
-		Gridbagconstraints.gridx = 2;
-		Gridbagconstraints.gridy = 2;
-		Panel4.add(Lh, Gridbagconstraints);
-		
+	
 		Hand = new JTextField();
-		Gridbagconstraints.gridx = 3;
-		Gridbagconstraints.gridy = 2;
-		
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 3;
 		Panel4.add(Hand, Gridbagconstraints);
 		
 		Einschreiben = new JButton("Confirm");
 		Gridbagconstraints.gridx = 5;
-		Gridbagconstraints.gridy = 2;
+		Gridbagconstraints.gridy = 3;
 		Panel4.add(Einschreiben, Gridbagconstraints);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
 		
 		Exit = new JButton("Back");
 		Gridbagconstraints.gridx = 5;
-		Gridbagconstraints.gridy = 1;
+		Gridbagconstraints.gridy = 2;
 		Panel4.add(Exit, Gridbagconstraints);
 		Exit.addActionListener(e -> debug_exit());
 		
@@ -544,6 +544,7 @@ public class KniffelGUI extends JFrame{
 				JOptionPane.showMessageDialog(null, "Incorrect entry. Check if the throw or what you want to play is written correct.");
 				return;
 			}
+			SpielFertig();
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "In Dice 1-5 has to be a number.");
 		}
@@ -618,8 +619,9 @@ public class KniffelGUI extends JFrame{
 		int Gewinner = spiel.getWinner();
 		if(Gewinner != -1) {
 			remove(Panel3);
+			remove(Panel4);
 			add(Panel5);
-			GewinnerLabel.setText("The Winner is " + spiel.getName(Gewinner) + " !");
+			GewinnerLabel.setText("The Winner is " + spiel.getName(Gewinner) + "!");
 		}
 	}
 }
