@@ -36,8 +36,8 @@ public class KniffelGUI extends JFrame{
 	//Farben definiert
 	private Color FarbePanelBackground = new Color(255, 202, 212); 
 	private Color FarbeCurSpieler = new Color(0, 128, 128);
-	//private Color FarbeVorgeschlageneWerte = FarbeCurSpieler;
 	private Color FarbeVorgeschlageneWerte = new Color(103, 197, 155);
+	
 	//Menubar
 	private JMenuBar Menubar;
 	private JMenu MenuFunktion;

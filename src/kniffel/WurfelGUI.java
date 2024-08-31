@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 
 public abstract class WurfelGUI{
 	final private static String[] filenames = new String[] {"one","two","three","four","five","six"};
-	
 	final public static Image noDice = readImage(new File("img/dice-six-faces-no-side.png"));
 	
 	public static Image getImage(int num){

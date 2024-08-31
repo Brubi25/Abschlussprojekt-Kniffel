@@ -26,12 +26,10 @@ public class KleineStrasse extends Hand {
 				if(curReihe > laengsteReihe) {
 					laengsteReihe = curReihe;
 				}
-				
 			}else {
 				curReihe = 1;
 			}
 		}
-		
 		return laengsteReihe >= 4;
 	}
 
@@ -39,5 +37,4 @@ public class KleineStrasse extends Hand {
 	public int getValue(Wurf W) {
 		return this.isValid(W) ? 30 : 0;
 	}
-
 }

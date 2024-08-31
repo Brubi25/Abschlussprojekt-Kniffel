@@ -30,5 +30,4 @@ public class Kniffel extends Hand {
 		}
 		return instance;
 	}
-
 }

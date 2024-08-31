@@ -3,7 +3,6 @@ package kniffel;
 public class GrosseStrasse extends Hand {
 	private static GrosseStrasse instance;
 	private GrosseStrasse() {
-		
 	}
 	
 	public static GrosseStrasse getInstance() {
@@ -13,7 +12,6 @@ public class GrosseStrasse extends Hand {
 		return instance;
 	}
 	
-
 	public boolean isValid(Wurf W) {
 		int[] anzahlen = new int[]{0,0,0,0,0,0};
 		for(int i = 0; i < 5; i++) {
