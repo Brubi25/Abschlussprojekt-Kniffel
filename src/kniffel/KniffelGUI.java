@@ -302,15 +302,16 @@ public class KniffelGUI extends JFrame{
 			wuerfel.addMouseListener(new MouseListener() {
 				public void mouseClicked(MouseEvent e) {
 					ToggleOnOff(wuerfel,pos,WuerfelReRoll);
-					
 				}
 				public void mousePressed(MouseEvent e) {
 				}
 				public void mouseReleased(MouseEvent e) {	
 				}
-				public void mouseEntered(MouseEvent e) {	
+				public void mouseEntered(MouseEvent e) {
+					ToggleHover(wuerfel,pos,true, WuerfelReRoll);
 				}
 				public void mouseExited(MouseEvent e) {
+					ToggleHover(wuerfel,pos,false, WuerfelReRoll);
 				}
 			});
 			Panel3.add(wuerfel);
@@ -547,6 +548,15 @@ public class KniffelGUI extends JFrame{
 		} else {
 			wuerfel[index] = true;
 			WuerfelNeu[index].setImage(WurfelGUI.getImage(spiel.getCurWurf().get(index)));
+		}
+		repaint();
+	}
+	
+	private void ToggleHover(JLabel button, int index, boolean on, boolean[] wuerfel) {
+		if(on) {
+			WuerfelNeu[index].setImage(WurfelGUI.getImageHover(spiel.getCurWurf().get(index)));
+		}else {
+			WuerfelNeu[index].setImage(wuerfel[index] ? WurfelGUI.getImage(spiel.getCurWurf().get(index)) : WurfelGUI.getImageGrey(spiel.getCurWurf().get(index)));
 		}
 		repaint();
 	}

@@ -22,6 +22,10 @@ public class WurfelGUI{
 	public static Image getImageGrey(int num){
 		return readImage(new File("img/dice-six-faces-" + filenames[num-1] + "-unselected.png"));
 	}
+	
+	public static Image getImageHover(int num){
+		return readImage(new File("img/dice-six-faces-" + filenames[num-1] + "-hover.png"));
+	}
 
 	public static Image readImage(File file) {
 		try {
