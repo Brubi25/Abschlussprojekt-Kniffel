@@ -47,14 +47,6 @@ public class Wurf {
 		return false;
 	}
 	
-	public String toString() {
-		String ret = "[";
-		for(int i : zahlen) {
-			ret += i + "|";
-		}
-		return ret.substring(0, ret.length()-1) + "]";
-	}
-	
 	public static Wurf wuerfeln() {
 		int[] zahlen = new int[5];
 		for(int i = 0; i < zahlen.length; i++) {
