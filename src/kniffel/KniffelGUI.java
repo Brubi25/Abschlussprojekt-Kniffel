@@ -407,7 +407,7 @@ public class KniffelGUI extends JFrame{
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			TabelleFormatieren();
 			HTextfeld.setText("");
-			JOptionPane.showMessageDialog(null, " The Player " + name + " has been added. ");
+			JOptionPane.showMessageDialog(null, "The Player " + name + " has been added.");
 		}else {
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Maximum number of players reached.");
@@ -495,8 +495,9 @@ public class KniffelGUI extends JFrame{
 				JOptionPane.showMessageDialog(null, "Wrong move!");
 			}
 		}else {
-			System.out.println("ALARM");
+			JOptionPane.showMessageDialog(null, "Please roll the dice or select a row.");
 		}
+		
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {
