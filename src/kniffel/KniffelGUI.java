@@ -54,7 +54,6 @@ public class KniffelGUI extends JFrame{
 	private ListSelectionModel Lsm;
 	private String[] SpaltenBeschriftung = new String[8];
 	private Object[][] ReihenBeschriftung = {
-
 			{"Aces", "The sum of dice with the number 1", null, null, null, null, null, null},
 			{"Twos", "The sum of dice with the number 2", null, null, null, null, null, null},
 			{"Threes", "The sum of dice with the number 3", null, null, null, null, null, null},
@@ -127,7 +126,6 @@ public class KniffelGUI extends JFrame{
 	private Font GewinnerLabelFont = new Font("Default", Font.PLAIN, 45);
 	private JButton BeendenButton;
 	
-	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
 		this.setSize(900, 716);
@@ -193,6 +191,7 @@ public class KniffelGUI extends JFrame{
 		};
 		Tabelle.setColumnSelectionAllowed(false);
 		Tabelle.setRowSelectionAllowed(false);
+		
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		
@@ -286,7 +285,6 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(Debugger, Gridbagconstraints);
 		Debugger.addActionListener(e -> debug());
 		
-
 		//Panel 4 -> Debug-Modus
 		Panel4.setBackground(FarbePanelBackground);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
@@ -401,7 +399,7 @@ public class KniffelGUI extends JFrame{
 		if(name.equals("")) {
 			JOptionPane.showMessageDialog(null, "No name given.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
-			spiel.addPlayer(name); //added Player in Backend
+			spiel.addPlayer(name);
 			int col = spiel.getAnzahlSpieler() + 1;
 			SpaltenBeschriftung[col] = name;
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
@@ -420,13 +418,13 @@ public class KniffelGUI extends JFrame{
 	 */
 	private void spielerweg() {
 		String name = ETextfeld.getText();
-		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
+		int spielerpos = spiel.removePlayer(name); 
 		if(spielerpos != Integer.MAX_VALUE) {
 			spielerpos += 2;
 			SpaltenBeschriftung[spielerpos] = null;
 			int SpielerAnzahl  = spiel.getAnzahlSpieler();
-			for(int i = spielerpos; i < SpielerAnzahl+2; i++){ //+2 wegen ersten zwei Spalten = ""
-				String temp = SpaltenBeschriftung[i];
+			for(int i = spielerpos; i < SpielerAnzahl + 2; i++){ 
+				String temp = SpaltenBeschriftung[i]; 
 				SpaltenBeschriftung[i] = SpaltenBeschriftung[i+1];
 				SpaltenBeschriftung[i+1] = temp;
 			}
@@ -497,7 +495,6 @@ public class KniffelGUI extends JFrame{
 		}else {
 			JOptionPane.showMessageDialog(null, "Please roll the dice or select a row.");
 		}
-		
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {
