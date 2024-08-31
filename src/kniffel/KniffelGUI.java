@@ -245,9 +245,10 @@ public class KniffelGUI extends JFrame{
 		Panel2.add(Start);
 		Start.addActionListener(e -> spielstarten());
 		
-		/*
 		//Panel3 -> während Spiel Interface
 		Panel3.setBackground(FarbePanelBackground);
+		
+		/*
 		Wuerfel1 = new JButton(" ");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
