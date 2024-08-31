@@ -3,19 +3,13 @@ package kniffel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,9 +38,6 @@ public class KniffelGUI extends JFrame{
 	private Color FarbeCurSpieler = new Color(0, 128, 128);
 	//private Color FarbeVorgeschlageneWerte = FarbeCurSpieler;
 	private Color FarbeVorgeschlageneWerte = new Color(103, 197, 155);
-	private Color ToggleOff = new Color(110, 106, 105);
-	private Color ToggleOn = new Color(222, 106, 216);		
-
 	//Menubar
 	private JMenuBar Menubar;
 	private JMenu MenuFunktion;
@@ -69,7 +60,7 @@ public class KniffelGUI extends JFrame{
 			{"Threes", "The sum of dice with the number 3", null, null, null, null, null, null},
 			{"Fours", "The sum of dice with the number 4", null, null, null, null, null, null},
 			{"Fives", "The sum of dice with the number 5", null, null, null, null, null, null},
-			{"Sixes", "The sum of dice with the number 5", null, null, null, null, null, null},
+			{"Sixes", "The sum of dice with the number 6", null, null, null, null, null, null},
 			{"Total", "          -------->", null, null, null, null, null, null},
 			{"Bonus on 63 or more", "plus 35", null, null, null, null, null, null},
 			{"Total upper section", "          -------->", null, null, null, null, null, null},
@@ -239,54 +230,6 @@ public class KniffelGUI extends JFrame{
 		
 		//Panel3 -> während Spiel Interface
 		Panel3.setBackground(FarbePanelBackground);
-		
-		/*
-		Wuerfel1 = new JButton(" ");
-		Gridbagconstraints.gridx = 0;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Wuerfel1, Gridbagconstraints);
-		Wuerfel1.setBackground(ToggleOn);
-		Wuerfel1.addActionListener(e -> ToggleOnOff(Wuerfel1, 0, WuerfelReRoll));
-	
-		Wuerfel2 = new JButton(" ");
-		Gridbagconstraints.gridx = 1;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Wuerfel2, Gridbagconstraints);
-		Wuerfel2.setBackground(ToggleOn);
-		Wuerfel2.addActionListener(e -> ToggleOnOff(Wuerfel2, 1, WuerfelReRoll));
-		
-		Wuerfel3 = new JButton(" ");
-		Gridbagconstraints.gridx = 2;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Wuerfel3, Gridbagconstraints);
-		Wuerfel3.setBackground(ToggleOn);
-		Wuerfel3.addActionListener(e -> ToggleOnOff(Wuerfel3, 2, WuerfelReRoll));
-		
-		/*
-		Wuerfel4 = new JButton(" ");
-		Gridbagconstraints.gridx = 3;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Wuerfel4, Gridbagconstraints);
-		Wuerfel4.setBackground(ToggleOn);
-		Wuerfel4.addActionListener(e -> ToggleOnOff(Wuerfel4, 3, WuerfelReRoll));
-		
-		JLabel panel = new EinsenGUI();
-		panel.setSize(100, 100);
-		Gridbagconstraints.gridx = 3;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(panel, Gridbagconstraints);
-	    panel.repaint();
-
-		
-		
-		Wuerfel5 = new JButton(" ");
-		Gridbagconstraints.gridx = 4;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Wuerfel5, Gridbagconstraints);
-		Wuerfel5.setBackground(ToggleOn);
-		Wuerfel5.addActionListener(e -> ToggleOnOff(Wuerfel5, 4, WuerfelReRoll));
-		e -> ToggleOnOff(Wuerfel5, 4, WuerfelReRoll));
-		*/
 		
 		for(int i = 0; i < WuerfelNeu.length; i++) {
 			WuerfelNeu[i] = new ImageIcon(WurfelGUI.noDice);
