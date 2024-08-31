@@ -542,6 +542,9 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void ToggleOnOff(JLabel button, int index, boolean[] wuerfel) {
+		if(spiel.getCurWurf() == null) {
+			return;
+		}
 		if(wuerfel[index]) {
 			wuerfel[index] = false;
 			WuerfelNeu[index].setImage(WurfelGUI.getImageGrey(spiel.getCurWurf().get(index)));
@@ -553,6 +556,9 @@ public class KniffelGUI extends JFrame{
 	}
 	
 	private void ToggleHover(JLabel button, int index, boolean on, boolean[] wuerfel) {
+		if(spiel.getCurWurf() == null) {
+			return;
+		}
 		if(on) {
 			WuerfelNeu[index].setImage(WurfelGUI.getImageHover(spiel.getCurWurf().get(index)));
 		}else {
