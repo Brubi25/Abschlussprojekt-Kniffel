@@ -10,7 +10,6 @@ public class Game {
 	Game(){
 		spieler = new Spieler[6];
 		anzSpieler = 0;
-		//debug
 		curSpieler = 0;
 		anzGewurfelt = 0;
 	}
@@ -86,11 +85,9 @@ public class Game {
 		for(; pos < anzSpieler; pos++) {
 			spieler[pos] = spieler[pos+1];
 		}
-		
 		return pos_gefunden;
 	}
 	
-	//für debug zum testen
 	public int setCurSpieler(String name) {
 		for(int i = 0; i < anzSpieler; i++) {
 			if(spieler[i].getName().equals(name)){
@@ -103,14 +100,6 @@ public class Game {
 	
 	public void setCurWurf(Wurf wurf) {
 		this.curWurf = wurf;
-	}
-	
-	//nächste FEature 1
-	//eigentlich Nutzlos
-	public void printAll(Wurf W) {
-		for(int i = 0; i < anzSpieler; i++) {
-			spieler[i].print(W);
-		}
 	}
 	
 	public int getAnzahlSpieler() {

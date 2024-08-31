@@ -1,6 +1,3 @@
-/**
- * 
- */
 package kniffel;
 
 public class Haupt {

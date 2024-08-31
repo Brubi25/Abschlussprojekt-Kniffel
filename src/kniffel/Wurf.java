@@ -5,7 +5,6 @@ import java.util.Random;
 public class Wurf {
 	private static Random random = new Random();
 	private int[] zahlen;
-	
 	final public static Wurf defaultWurf = new Wurf(new int[] {1,1,1,1,1});
 	
 	public Wurf(int[] zahlen) {

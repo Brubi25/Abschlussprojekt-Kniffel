@@ -31,11 +31,13 @@ import javax.swing.table.TableColumnModel;
 public class KniffelGUI extends JFrame{
 	private Game spiel;
 	
-	//random shit
+	//Farben definiert
 	private Color FarbePanelBackground = new Color(255, 202, 212); 
 	private Color FarbeCurSpieler = new Color(0, 128, 128);
 	private Color FarbeVorgeschlageneWerte = new Color(153, 237, 195);
-	
+	private Color ToggleOff = new Color(110, 106, 105);
+	private Color ToggleOn = new Color(222, 106, 216);		
+
 	//Menubar
 	private JMenuBar Menubar;
 	private JMenu MenuFunktion;
@@ -49,10 +51,9 @@ public class KniffelGUI extends JFrame{
 	private DefaultTableModel Data;
 	private TableColumnModel ColumnModel;
 	private JScrollPane ScrollPane;
-	private ListSelectionModel lsm;
+	private ListSelectionModel Lsm;
 	private String[] SpaltenBeschriftung = new String[8];
 	private Object[][] ReihenBeschriftung = {
-
 			{"Aces", "The sum of dice with the number 1", null, null, null, null, null, null},
 			{"Twos", "The sum of dice with the number 2", null, null, null, null, null, null},
 			{"Threes", "The sum of dice with the number 3", null, null, null, null, null, null},
@@ -95,12 +96,10 @@ public class KniffelGUI extends JFrame{
 	private JButton Wuerfel4;
 	private JButton Wuerfel5;
 	private JButton Wuerfeln;
-	private Color toggleOff = new Color(110, 106, 105);
-	private Color toggleOn = new Color(222, 106, 216);		
-	private Wurf wurf;
-	private JButton debugger;
+	private Wurf Wurf;
+	private JButton Debugger;
 	private JButton ZugBestaetigen;
-	private int selRow = Integer.MAX_VALUE;
+	private int SelRow = Integer.MAX_VALUE;
 	
 	//Debugger
 	private JPanel Panel4;
@@ -109,15 +108,15 @@ public class KniffelGUI extends JFrame{
 	private JTextField Spieler;
 	private JLabel Lh;
 	private JTextField Hand;
-	private JLabel lW1;
+	private JLabel LW1;
 	private JTextField W1;
-	private JLabel lW2;
+	private JLabel LW2;
 	private JTextField W2;
-	private JLabel lW3;
+	private JLabel LW3;
 	private JTextField W3;
-	private JLabel lW4;
+	private JLabel LW4;
 	private JTextField W4;
-	private JLabel lW5;
+	private JLabel LW5;
 	private JTextField W5;
 	private JButton Exit;
 	
@@ -126,7 +125,6 @@ public class KniffelGUI extends JFrame{
 	private JLabel GewinnerLabel;
 	private Font GewinnerLabelFont = new Font("Default", Font.PLAIN, 45);
 	private JButton BeendenButton;
-	
 	
 	public KniffelGUI(Game spiel){
 		this.spiel = spiel;
@@ -146,7 +144,7 @@ public class KniffelGUI extends JFrame{
 		Gridbaglayout = new GridBagLayout();
 		Gridbagconstraints = new GridBagConstraints();
 		Gridbaglayout.setConstraints(Panel3, Gridbagconstraints);
-		Insets = new Insets(20,20,20, 20);
+		Insets = new Insets(15,15,15,15);
 		Gridbagconstraints.insets = Insets;
 		Panel3.setLayout(Gridbaglayout);
 		
@@ -193,6 +191,7 @@ public class KniffelGUI extends JFrame{
 		};
 		Tabelle.setColumnSelectionAllowed(false);
 		Tabelle.setRowSelectionAllowed(false);
+		
 		ScrollPane = new JScrollPane(Tabelle);
 		Tabelle.getTableHeader().setReorderingAllowed(false);
 		
@@ -209,25 +208,25 @@ public class KniffelGUI extends JFrame{
 		Panel2.setBackground(FarbePanelBackground);
 				
 		HTextfeld = new JTextField();
-		HTextfeld.setBounds(10, 20, 100, 20);
+		HTextfeld.setBounds(15, 20, 150, 20);
 		Panel2.add(HTextfeld);
 		
 		Hinzufuegen = new JButton("Add Player");
-		Hinzufuegen.setBounds(130, 20, 150, 20);
+		Hinzufuegen.setBounds(190, 20, 150, 20);
 		Panel2.add(Hinzufuegen);
 		Hinzufuegen.addActionListener(e -> spielerdazu());	
 		
 		ETextfeld = new JTextField();
-		ETextfeld.setBounds(320, 20, 100, 20);
+		ETextfeld.setBounds(365, 20, 150, 20);
 		Panel2.add(ETextfeld);
 		
 		Entfernen = new JButton("Remove Player");
-		Entfernen.setBounds(430, 20, 150, 20);
+		Entfernen.setBounds(540, 20, 150, 20);
 		Panel2.add(Entfernen);
 		Entfernen.addActionListener(e -> spielerweg());
 		
 		Start = new JButton("Start Game");
-		Start.setBounds(600, 20, 150, 20);
+		Start.setBounds(715, 20, 150, 20);
 		Panel2.add(Start);
 		Start.addActionListener(e -> spielstarten());
 		
@@ -237,35 +236,35 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel1, Gridbagconstraints);
-		Wuerfel1.setBackground(toggleOn);
+		Wuerfel1.setBackground(ToggleOn);
 		Wuerfel1.addActionListener(e -> ToggleOnOff(Wuerfel1, 0, WuerfelReRoll));
 	
 		Wuerfel2 = new JButton(" ");
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel2, Gridbagconstraints);
-		Wuerfel2.setBackground(toggleOn);
+		Wuerfel2.setBackground(ToggleOn);
 		Wuerfel2.addActionListener(e -> ToggleOnOff(Wuerfel2, 1, WuerfelReRoll));
 		
 		Wuerfel3 = new JButton(" ");
 		Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel3, Gridbagconstraints);
-		Wuerfel3.setBackground(toggleOn);
+		Wuerfel3.setBackground(ToggleOn);
 		Wuerfel3.addActionListener(e -> ToggleOnOff(Wuerfel3, 2, WuerfelReRoll));
 		
 		Wuerfel4 = new JButton(" ");
 		Gridbagconstraints.gridx = 3;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel4, Gridbagconstraints);
-		Wuerfel4.setBackground(toggleOn);
+		Wuerfel4.setBackground(ToggleOn);
 		Wuerfel4.addActionListener(e -> ToggleOnOff(Wuerfel4, 3, WuerfelReRoll));
 		
 		Wuerfel5 = new JButton(" ");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 0;
 		Panel3.add(Wuerfel5, Gridbagconstraints);
-		Wuerfel5.setBackground(toggleOn);
+		Wuerfel5.setBackground(ToggleOn);
 		Wuerfel5.addActionListener(e -> ToggleOnOff(Wuerfel5, 4, WuerfelReRoll));
 		
 		Wuerfeln = new JButton("Roll Dice");
@@ -280,42 +279,41 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(ZugBestaetigen, Gridbagconstraints);
 		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
 	
-		debugger = new JButton("Debug-Mode");
+		Debugger = new JButton("Debug-Mode");
 		Gridbagconstraints.gridx = 7;
 		Gridbagconstraints.gridy = 0;
-		Panel3.add(debugger, Gridbagconstraints);
-		debugger.addActionListener(e -> debug());
+		Panel3.add(Debugger, Gridbagconstraints);
+		Debugger.addActionListener(e -> debug());
 		
-
 		//Panel 4 -> Debug-Modus
 		Panel4.setBackground(FarbePanelBackground);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
 		Gridbagconstraints.insets = new Insets(5, 5, 5, 5);
 		
-		lW1 = new JLabel("Dice 1");
+		LW1 = new JLabel("Dice 1");
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 0;
-		Panel4.add(lW1, Gridbagconstraints);
+		Panel4.add(LW1, Gridbagconstraints);
 
-		lW2 = new JLabel("Dice 2");
+		LW2 = new JLabel("Dice 2");
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 0;
-		Panel4.add(lW2, Gridbagconstraints);
+		Panel4.add(LW2, Gridbagconstraints);
 		
-		lW3 = new JLabel("Dice 3");
+		LW3 = new JLabel("Dice 3");
 		Gridbagconstraints.gridx = 2;
 		Gridbagconstraints.gridy = 0;
-		Panel4.add(lW3, Gridbagconstraints);
+		Panel4.add(LW3, Gridbagconstraints);
 
-		lW4 = new JLabel("Dice 4");
+		LW4 = new JLabel("Dice 4");
 		Gridbagconstraints.gridx = 3;
 		Gridbagconstraints.gridy = 0;
-		Panel4.add(lW4, Gridbagconstraints);
+		Panel4.add(LW4, Gridbagconstraints);
 
-		lW5 = new JLabel("Dice 5");
+		LW5 = new JLabel("Dice 5");
 		Gridbagconstraints.gridx = 4;
 		Gridbagconstraints.gridy = 0;
-		Panel4.add(lW5, Gridbagconstraints);
+		Panel4.add(LW5, Gridbagconstraints);
 		
 		W1 = new JTextField();
 		Gridbagconstraints.gridx = 0;
@@ -346,32 +344,32 @@ public class KniffelGUI extends JFrame{
 		Gridbagconstraints.gridx = 0;
 		Gridbagconstraints.gridy = 2;
 		Panel4.add(Ls, Gridbagconstraints);
+
+		Lh = new JLabel("Hand");
+		Gridbagconstraints.gridx = 0;
+		Gridbagconstraints.gridy = 3;
+		Panel4.add(Lh, Gridbagconstraints);
 		
 		Spieler = new JTextField();
 		Gridbagconstraints.gridx = 1;
 		Gridbagconstraints.gridy = 2;
+		Gridbagconstraints.gridwidth = 4;
 		Panel4.add(Spieler, Gridbagconstraints);
-		
-		Lh = new JLabel("Hand");
-		Gridbagconstraints.gridx = 2;
-		Gridbagconstraints.gridy = 2;
-		Panel4.add(Lh, Gridbagconstraints);
-		
+	
 		Hand = new JTextField();
-		Gridbagconstraints.gridx = 3;
-		Gridbagconstraints.gridy = 2;
-		
+		Gridbagconstraints.gridx = 1;
+		Gridbagconstraints.gridy = 3;
 		Panel4.add(Hand, Gridbagconstraints);
 		
 		Einschreiben = new JButton("Confirm");
 		Gridbagconstraints.gridx = 5;
-		Gridbagconstraints.gridy = 2;
+		Gridbagconstraints.gridy = 3;
 		Panel4.add(Einschreiben, Gridbagconstraints);
 		Einschreiben.addActionListener(e -> debug_einschreiben());
 		
 		Exit = new JButton("Back");
 		Gridbagconstraints.gridx = 5;
-		Gridbagconstraints.gridy = 1;
+		Gridbagconstraints.gridy = 2;
 		Panel4.add(Exit, Gridbagconstraints);
 		Exit.addActionListener(e -> debug_exit());
 		
@@ -401,13 +399,13 @@ public class KniffelGUI extends JFrame{
 		if(name.equals("")) {
 			JOptionPane.showMessageDialog(null, "No name given.");
 		}else if(spiel.getAnzahlSpieler() < 6) {
-			spiel.addPlayer(name); //added Player in Backend
+			spiel.addPlayer(name);
 			int col = spiel.getAnzahlSpieler() + 1;
 			SpaltenBeschriftung[col] = name;
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			TabelleFormatieren();
 			HTextfeld.setText("");
-			JOptionPane.showMessageDialog(null, " The Player " + name + " has been added. ");
+			JOptionPane.showMessageDialog(null, "The Player " + name + " has been added.");
 		}else {
 			HTextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Maximum number of players reached.");
@@ -420,13 +418,13 @@ public class KniffelGUI extends JFrame{
 	 */
 	private void spielerweg() {
 		String name = ETextfeld.getText();
-		int spielerpos = spiel.removePlayer(name); // löscht Spieler und returnt position in Backend Array
+		int spielerpos = spiel.removePlayer(name); 
 		if(spielerpos != Integer.MAX_VALUE) {
 			spielerpos += 2;
 			SpaltenBeschriftung[spielerpos] = null;
 			int SpielerAnzahl  = spiel.getAnzahlSpieler();
-			for(int i = spielerpos; i < SpielerAnzahl+2; i++){ //+2 wegen ersten zwei Spalten = ""
-				String temp = SpaltenBeschriftung[i];
+			for(int i = spielerpos; i < SpielerAnzahl + 2; i++){ 
+				String temp = SpaltenBeschriftung[i]; 
 				SpaltenBeschriftung[i] = SpaltenBeschriftung[i+1];
 				SpaltenBeschriftung[i+1] = temp;
 			}
@@ -449,12 +447,12 @@ public class KniffelGUI extends JFrame{
 			remove(Panel2);
 			add(Panel3);
 			//Quelle: https://www.youtube.com/watch?v=5dK4dA39INk
-			lsm = Tabelle.getSelectionModel();
-			lsm.addListSelectionListener(new ListSelectionListener() {
+			Lsm = Tabelle.getSelectionModel();
+			Lsm.addListSelectionListener(new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					if(!lsm.isSelectionEmpty()) {
-						selRow = lsm.getMinSelectionIndex();
+					if(!Lsm.isSelectionEmpty()) {
+						SelRow = Lsm.getMinSelectionIndex();
 					}
 				}
 			});
@@ -468,12 +466,12 @@ public class KniffelGUI extends JFrame{
 
 	private void GUI_wuerfeln(boolean[] wuerfel) {
 		if (spiel.getAnzGewurfelt() < 3) {
-			wurf = spiel.wurfeln(wuerfel);
-			Wuerfel1.setText(Integer.toString(wurf.get(0)));
-			Wuerfel2.setText(Integer.toString(wurf.get(1)));
-			Wuerfel3.setText(Integer.toString(wurf.get(2)));
-			Wuerfel4.setText(Integer.toString(wurf.get(3)));
-			Wuerfel5.setText(Integer.toString(wurf.get(4)));
+			Wurf = spiel.wurfeln(wuerfel);
+			Wuerfel1.setText(Integer.toString(Wurf.get(0)));
+			Wuerfel2.setText(Integer.toString(Wurf.get(1)));
+			Wuerfel3.setText(Integer.toString(Wurf.get(2)));
+			Wuerfel4.setText(Integer.toString(Wurf.get(3)));
+			Wuerfel5.setText(Integer.toString(Wurf.get(4)));
 			VorgeschlageneWerteAnzeigen();
 		} else {
 			JOptionPane.showMessageDialog(null, "You can roll the dice a maximum of 3 times");
@@ -481,8 +479,8 @@ public class KniffelGUI extends JFrame{
 	}
 
 	private void GUI_ZugBestaetigen() {
-		if(selRow < ReihenBeschriftung.length) {
-			String hand = (String)ReihenBeschriftung[selRow][0];
+		if(SelRow < ReihenBeschriftung.length) {
+			String hand = (String)ReihenBeschriftung[SelRow][0];
 			if(spiel.handSpielen(hand)) {
 				SpielFertig();
 				CurSpielerMarkieren();
@@ -495,21 +493,43 @@ public class KniffelGUI extends JFrame{
 				JOptionPane.showMessageDialog(null, "Wrong move!");
 			}
 		}else {
-			System.out.println("ALARM");
+			JOptionPane.showMessageDialog(null, "Please roll the dice or select a row.");
 		}
 	}
 
 	private void ToggleOnOff(JButton button, int index, boolean[] wuerfel) {
 		if(wuerfel[index]) {
 			wuerfel[index] = false;
-			button.setBackground(toggleOff);
+			button.setBackground(ToggleOff);
 		} else {
 			wuerfel[index] = true;
-			button.setBackground(toggleOn);
+			button.setBackground(ToggleOn);
 		}
 	}
 	
 	private void RegelnAnzeigen() {
+		String rules = "Yahtzee Rules:\n\n" +
+                "1. The game consists of 13 rounds. In each round, the player may roll the dice up to three times.\n" +
+                "2. After each roll, the player can choose to keep any dice and re-roll the others.\n" +
+                "3. After the final roll, the player must enter a score into one of the 13 categories.\n\n" +
+                "Categories and Scoring:\n" +
+                "Upper Section:\n" +
+                " - Aces to Sixes: Sum of the respective dice values.\n" +
+                " - Bonus: 35 points for 63 or more points.\n\n" +
+                "Lower Section:\n" +
+                " - Three of a Kind: At least three dice of the same number. Score = Sum of all dice.\n" +
+                " - Four of a Kind: At least four dice of the same number. Score = Sum of all dice.\n" +
+                " - Full House: Three of one number + two of another. Score = 25 points.\n" +
+                " - Small Straight: Four consecutive numbers. Score = 30 points.\n" +
+                " - Large Straight: Five consecutive numbers. Score = 40 points.\n" +
+                " - Yahtzee: Five of the same number. Score = 50 points.\n" +
+                " - Chance: Any combination. Score = Sum of all dice.\n\n" +
+                "Scoring:\n" +
+                " - Each category can only be scored once.\n" +
+                " - If the dice do not match the category, the score is 0.\n" +
+                " - End of the game: After 13 rounds, all categories are filled. Total score = Sum of all points + bonuses.";
+ 
+ JOptionPane.showMessageDialog(this, rules, "Spielregeln", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private void debug() {
@@ -544,6 +564,7 @@ public class KniffelGUI extends JFrame{
 				JOptionPane.showMessageDialog(null, "Incorrect entry. Check if the throw or what you want to play is written correct.");
 				return;
 			}
+			SpielFertig();
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "In Dice 1-5 has to be a number.");
 		}
@@ -603,23 +624,24 @@ public class KniffelGUI extends JFrame{
 	private void GUIWuerfelReset() {
 		WuerfelReRoll = new boolean[]{true, true, true, true, true, true};
 		Wuerfel1.setText(" ");
-		Wuerfel1.setBackground(toggleOn);
+		Wuerfel1.setBackground(ToggleOn);
 		Wuerfel2.setText(" ");
-		Wuerfel2.setBackground(toggleOn);
+		Wuerfel2.setBackground(ToggleOn);
 		Wuerfel3.setText(" ");
-		Wuerfel3.setBackground(toggleOn);
+		Wuerfel3.setBackground(ToggleOn);
 		Wuerfel4.setText(" ");
-		Wuerfel4.setBackground(toggleOn);
+		Wuerfel4.setBackground(ToggleOn);
 		Wuerfel5.setText(" ");
-		Wuerfel5.setBackground(toggleOn);
+		Wuerfel5.setBackground(ToggleOn);
 	}
 	
 	private void SpielFertig() {
 		int Gewinner = spiel.getWinner();
 		if(Gewinner != -1) {
 			remove(Panel3);
+			remove(Panel4);
 			add(Panel5);
-			GewinnerLabel.setText("The Winner is " + spiel.getName(Gewinner) + " !");
+			GewinnerLabel.setText("The Winner is " + spiel.getName(Gewinner) + "!");
 		}
 	}
 }
