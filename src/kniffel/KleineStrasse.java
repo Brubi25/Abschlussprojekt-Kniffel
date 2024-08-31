@@ -3,7 +3,6 @@ package kniffel;
 public class KleineStrasse extends Hand {
 	private static KleineStrasse instance;
 	private KleineStrasse() {
-		
 	}
 	
 	public static KleineStrasse getInstance() {

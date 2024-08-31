@@ -1,17 +1,12 @@
 package kniffel;
 
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
-public class WurfelGUI{
-	final static String[] filenames = new String[] {"one","two","three","four","five","six"};
+public abstract class WurfelGUI{
+	final private static String[] filenames = new String[] {"one","two","three","four","five","six"};
 	
 	final public static Image noDice = readImage(new File("img/dice-six-faces-no-side.png"));
 	

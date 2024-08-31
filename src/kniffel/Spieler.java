@@ -31,15 +31,6 @@ public class Spieler {
 		Haende.put("Bonus on 63 or more", new FesterWert(0));
 	}
 	
-	public void print(Wurf W) {
-		System.out.println(name + ": " + "\t" + W);
-		
-		Iterator<String> HandName = Haende.keySet().iterator();
-		for(DarstellbarerWert Wert : Haende.values()) {
-			System.out.println("\t" + HandName.next() + " (" + (Wert.isPlayable() ? "Playable" : "Not Playable") + "): " + (Wert.getValue(W) == 0 ? "---" : Wert.getValue(W)));
-		}
-	}
-	
 	public boolean play(String hand, Wurf W) {
 		DarstellbarerWert Wert;
 		if((Wert = Haende.get(hand)) != null && Wert.isPlayable()) {
