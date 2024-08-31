@@ -53,6 +53,7 @@ public class KniffelGUI extends JFrame{
 	private JMenu MenuInformation;
 	private JMenuItem Beenden;
 	private JMenuItem Regeln;
+	private JMenuItem Debug;
 	
 	//Tabelle mit Werten
 	private JPanel Panel1;
@@ -175,6 +176,7 @@ public class KniffelGUI extends JFrame{
 		MenuFunktion = new JMenu("Function");
 		MenuInformation = new JMenu("Information");
 		Beenden = new JMenuItem("Exit");
+		Debug = new JMenuItem("Debug-Mode");
 		Regeln = new JMenuItem("Rules");
 		
 		Menubar.add(MenuFunktion);
@@ -184,6 +186,7 @@ public class KniffelGUI extends JFrame{
 	
 		Beenden.addActionListener(e -> System.exit(0));
 		Regeln.addActionListener(e -> RegelnAnzeigen());
+		Debug.addActionListener(e -> debug());
 		this.setJMenuBar(Menubar);
 		
 		//Panel1 -> Tabelle
@@ -325,12 +328,6 @@ public class KniffelGUI extends JFrame{
 		Panel3.add(ZugBestaetigen, Gridbagconstraints);
 		ZugBestaetigen.addActionListener(e -> GUI_ZugBestaetigen());
 	
-		Debugger = new JButton("Debug-Mode");
-		Gridbagconstraints.gridx = 7;
-		Gridbagconstraints.gridy = 0;
-		Panel3.add(Debugger, Gridbagconstraints);
-		Debugger.addActionListener(e -> debug());
-		
 		//Panel 4 -> Debug-Modus
 		Panel4.setBackground(FarbePanelBackground);
 		Gridbagconstraints.fill = GridBagConstraints.BOTH;
@@ -504,6 +501,7 @@ public class KniffelGUI extends JFrame{
 			});
 			//Quelle Ende
 			CurSpielerMarkieren();
+			MenuFunktion.add(Debug);
 			revalidate();
 		} else {
 			JOptionPane.showMessageDialog(null, "More than zero players must participate.");
