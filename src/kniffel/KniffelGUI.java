@@ -100,17 +100,9 @@ public class KniffelGUI extends JFrame{
 	private GridBagConstraints Gridbagconstraints;
 	private Insets Insets;
 	private boolean[] WuerfelReRoll = {true, true, true, true, true}; //true  == reroll
-	private JButton Wuerfel1;
-	private JButton Wuerfel2;
-	private JButton Wuerfel3;
-	private JButton Wuerfel4;
-	private JButton Wuerfel5;
-	
 	private ImageIcon[] WuerfelNeu = new ImageIcon[5];
-	
 	private JButton Wuerfeln;
 	private Wurf Wurf;
-	private JButton Debugger;
 	private JButton ZugBestaetigen;
 	private int SelRow = Integer.MAX_VALUE;
 	
