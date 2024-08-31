@@ -431,7 +431,7 @@ public class KniffelGUI extends JFrame{
 			Data.setDataVector(ReihenBeschriftung, SpaltenBeschriftung);
 			TabelleFormatieren();
 			ETextfeld.setText("");
-			JOptionPane.showMessageDialog(null, "Player " + name + "deleted.");
+			JOptionPane.showMessageDialog(null, "Player " + name + " deleted.");
 		} else {
 			ETextfeld.setText("");
 			JOptionPane.showMessageDialog(null, "Player not available.");
@@ -474,7 +474,7 @@ public class KniffelGUI extends JFrame{
 			Wuerfel5.setText(Integer.toString(Wurf.get(4)));
 			VorgeschlageneWerteAnzeigen();
 		} else {
-			JOptionPane.showMessageDialog(null, "You can roll the dice a maximum of 3 times");
+			JOptionPane.showMessageDialog(null, "You can roll the dice a maximum of 3 times.");
 		}
 	}
 
