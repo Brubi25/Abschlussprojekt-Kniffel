@@ -39,6 +39,7 @@ public class Game {
 	}
 	
 	public int nextPlayer() {
+		this.curWurf = null;
 		return curSpieler = (curSpieler + 1) % anzSpieler;
 	}
 	

@@ -685,9 +685,8 @@ public class KniffelGUI extends JFrame{
 	
 	private void GUIWuerfelReset() {
 		WuerfelReRoll = new boolean[]{true, true, true, true, true, true};
-		spiel.wurfeln();
 		for(int i = 0; i < WuerfelNeu.length; i++) {
-			WuerfelNeu[i].setImage(WurfelGUI.getImage(spiel.getCurWurf().get(i)));
+			WuerfelNeu[i].setImage(WurfelGUI.noDice);
 		}
 	}
 	
